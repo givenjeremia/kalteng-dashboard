@@ -10,7 +10,7 @@
 
 <div class="card card-flush">
     <div class="card-body">
-        <table class="table table-bordered align-middle">
+        <table class="table table-bordered align-middle rounded-4">
             <thead class="table-secondary">
                 <tr class="fw-semibold fs-6 text-gray-800">
                     <th>DIVISI</th>
@@ -39,21 +39,29 @@
                             <td class="text-center">
                                 @if($file)
                                     <div class="mt-3">
-                                        <a href="{{ $file->getUrl() }}" target="_blank" class="badge bg-success text-white">
+                               
+                                        <a class="badge bg-success text-white fs-4" data-fslightbox="lightbox-basic" href="{{ $file->getUrl() }}">
                                             Lihat File
                                         </a>
                                         <br>
-                                        <small class="text-muted">
+                                        <small class="text-muted fs-6">
                                             Update terakhir: {{ $file->updated_at->format('d M Y H:i') }}
                                         </small>
                                     </div>
                                 @else
-                                    Belum Ada
+                                    
+                                    <span class="badge bg-danger text-white fs-4">
+                                        Belum Ada
+                                    </span>
                                 @endif
                             </td>
                         @endforeach
-                        <td class="fw-bold text-center {{ $isComplete ? 'text-success' : 'text-danger' }}">
-                            {{ $isComplete ? 'LENGKAP' : 'BELUM LENGKAP' }}
+                        <td class="fw-bold text-center">
+                            
+                            <span class="badge {{ $isComplete ? 'bg-success' : 'bg-danger' }} text-white fs-4">
+                                {{ $isComplete ? 'LENGKAP' : 'BELUM LENGKAP' }}
+                            </span>
+                            
                         </td>
                     </tr>
                 @endforeach
