@@ -88,49 +88,49 @@
                     </a>
                 </div>
 
+                @if(auth()->user()->hasRole('Super Admin'))
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('file-categories.index') ? 'active' : '' }}"
+                            href="{{ route('file-categories.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-setting-2 fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">File Categories</span>
+                        </a>
+                    </div>
 
-                <div class="menu-item">
-                    <a class="menu-link {{ request()->routeIs('file-categories.index') ? 'active' : '' }}"
-                        href="{{ route('file-categories.index') }}">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-setting-2 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">File Categories</span>
-                    </a>
-                </div>
-
-                <div class="menu-item">
-                    <a class="menu-link {{ request()->routeIs('departements.index') ? 'active' : '' }}"
-                        href="{{ route('departements.index') }}">
-                        
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-archive fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Departement</span>
-                    </a>
-                </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('departements.index') ? 'active' : '' }}"
+                            href="{{ route('departements.index') }}">
+                            
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-archive fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Departement</span>
+                        </a>
+                    </div>
 
 
-                <div class="menu-item">
-                    <a class="menu-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
-                        href="{{ route('users.index') }}">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-security-user fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Users</span>
-                    </a>
-                </div>
-
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
+                            href="{{ route('users.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-security-user fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Users</span>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

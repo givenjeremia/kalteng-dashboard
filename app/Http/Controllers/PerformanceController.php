@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FileCategory;
+use App\Models\Departement;
+use App\Models\Performance;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PerformanceController extends Controller
@@ -12,7 +16,16 @@ class PerformanceController extends Controller
     public function index()
     {
         try {
-            return view('pages.performance.index');
+            $user = Auth::user();
+            $file_categories = FileCategory::all();
+            $performance     = Performance::with('media')->where('departement_id', $user->departement_id)->first();
+            if ($user->hasRole('Super Admin')) {
+                $departements    = Departement::all();
+                $file_categories = FileCategory::all();
+                $performances    = Performance::with('media')->get();
+                return view('pages.performance.index_admin',compact('file_categories','performances','departements'));
+            }
+            return view('pages.performance.index',compact('file_categories','performance'));
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -31,7 +44,50 @@ class PerformanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $user = auth()->user();
+    
+            $performance = Performance::where('departement_id', $user->departement_id)
+                ->whereYear('created_at', now()->year)
+                ->whereMonth('created_at', now()->month)
+                ->first();
+    
+            if (!$performance) {
+                $performance = Performance::create([
+                    'departement_id' => $user->departement_id,
+                    'title'          => $request->title ?? 'Performance '.now()->format('M Y'),
+                ]);
+            }
+    
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $categoryId => $file) {
+                    if ($file) {
+                        $oldFile = $performance->getMedia('files')
+                            ->first(fn($media) => $media->getCustomProperty('file_category_id') == $categoryId);
+    
+                        if ($oldFile) {
+                            $oldFile->delete();
+                        }
+
+                        $performance->addMedia($file)
+                            ->withCustomProperties(['file_category_id' => $categoryId])
+                            ->toMediaCollection('files');
+                    }
+                }
+            }
+    
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Performance berhasil disimpan / diperbarui'
+            ]);
+    
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Gagal menyimpan',
+                'error'   => $th->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -55,7 +111,11 @@ class PerformanceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            # code...
+        } catch (\Throwable $e) {
+            # code...
+        }
     }
 
     /**
@@ -63,6 +123,10 @@ class PerformanceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            # code...
+        } catch (\Throwable $e) {
+            # code...
+        }
     }
 }

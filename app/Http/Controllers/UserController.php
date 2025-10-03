@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\FileCategory;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,7 +19,10 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $this->tableDataAdmin();
+            if (request()->ajax()){
+
+                return $this->tableDataAdmin();
+            }
             return view('pages.users.index');
         } catch (\Throwable $th) {
             dd($th);
@@ -35,7 +39,7 @@ class UserController extends Controller
                     return $counter++;
                 })
                 ->addColumn('Name', function($item) {
-                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->title.'</span>';
+                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->name.'</span>';
                 })
                 ->addColumn('Username', function($item) {
                     return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->username.'</span>';
@@ -44,7 +48,11 @@ class UserController extends Controller
                     return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->email.'</span>';
                 })
                 ->addColumn('Departement', function($item) {
-                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->departement->title.'</span>';
+                    if($item->departement){
+
+                        return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->departement->title.'</span>';
+                    }
+                    return '-';
                 })
                 ->addColumn('Role', function($item) {
                     return '<span class="text-gray-800 fs-5 fw-bold mb-1">'.$item->getRoleNames()->first().'</span>';
@@ -68,11 +76,12 @@ class UserController extends Controller
     public function create()
     {
         try {
-            $roles = Role::all(); // ambil semua role
+            $roles = Role::all();
+            $departements = Departement::all();
 
             return response()->json([
                 'status' => 'success',
-                'msg'    => view('pages.users.modal.create', compact('roles'))->render()
+                'msg'    => view('pages.users.modal.create', compact('roles','departements'))->render()
             ], 200);
         } catch (\Throwable $e) {
             return response()->json(array('status' => 'error','msg' => 'Gagal Menampilkan Form Tambah','err'=>$e->getMessage()), 200);
@@ -90,9 +99,23 @@ class UserController extends Controller
                 'username' => 'required',
                 'email' => 'required',
                 'password' => 'required',
+                'departement_id' => 'nullable|exists:departements,pkid',
+                'role'      => 'nullable|exists:roles,name',
+            ]);
+
+            $user = User::create([
+                'name'          => $validated['name'],
+                'username'      => $validated['username'],
+                'email'         => $validated['email'],
+                'password'      => Hash::make($validated['password']),
+                'departement_id'=> $validated['departement_id'] ?? null,
             ]);
     
-            User::create($validated);
+        
+            if (!empty($validated['role'])) {
+                $user->assignRole($validated['role']);
+            }
+            
     
             return response()->json([
                 'status' => 'success',
@@ -145,12 +168,34 @@ class UserController extends Controller
     {
         try {
             $validated = $request->validate([
-                'title' => 'required',
+                'name'      => 'required',
+                'username'  => 'required',
+                'email'     => 'required', 
+                'password'  => 'nullable|min:6',
+                'departement_id' => 'nullable|exists:departements,pkid',
+                'role'      => 'nullable|exists:roles,name',
             ]);
-
-            $data = User::find($id);
-            $data->update($validated);
-
+    
+            $data = User::findOrFail($id);
+    
+            $updateData = [
+                'name'      => $validated['name'],
+                'username'  => $validated['username'],
+                'email'     => $validated['email'],
+                'departement_id' => $validated['departement_id'] ?? null,
+            ];
+    
+            if (!empty($validated['password'])) {
+                $updateData['password'] = Hash::make($validated['password']);
+            }
+    
+            $data->update($updateData);
+    
+    
+            if ($request->filled('role')) {
+                $data->syncRoles($request->role);
+            }
+    
             return response()->json([
                 'status' => 'success',
                 'msg'    => 'Berhasil Update Data'
