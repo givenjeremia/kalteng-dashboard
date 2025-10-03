@@ -1,0 +1,731 @@
+/* ======================================== Section Kebijakan ======================================== */
+
+/* .zone-kebijakan{
+    padding: 0 100px;
+} */
+
+.main-kebijakan-header {
+    text-align: center;
+    /* padding-top: 80px;
+    padding-bottom: 67px; */
+}
+
+.kebijakan-header-title {
+    font-size: 56px;
+    font-weight: 500;
+    color: #111827;
+}
+
+.kebijakan-header-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: #6B7280;
+}
+
+.kebijakan-box-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.main-kebijakan-box {
+    padding-bottom: 150px;
+    /* margin: 0 10px; */
+}
+
+.kebijakan-box1,
+.kebijakan-box2,
+.kebijakan-box3,
+.kebijakan-box4,
+.kebijakan-box5 {
+    width: 100%;
+    height: 100%;
+    /* padding: 50px 60px; */
+    border: 2px solid #E1E1E1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.kebijakan-box1,
+.kebijakan-box3,
+.kebijakan-box4 {
+    /* border-top: none; */
+    /* border-left: none;
+    border-right: none;
+    border-bottom: none; */
+}
+
+.kebijakan-box4,
+.kebijakan-box5 {
+    /* border-top: none; */
+}
+
+.kebijakan-box5 {
+    /* border-right: none; */
+}
+
+.kebijakan-box-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.kebijakan-box-subtitle {
+    font-size: 18px;
+    /* height: 100px; */
+    padding: 20px 0;
+    display: -webkit-box;
+    /* -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+}
+
+.kebijakan-box-pill-blue,
+.kebijakan-box-pill-red,
+.kebijakan-box-pill-orange,
+.kebijakan-box-pill-green,
+.kebijakan-box-pill-silver {
+    width: 200px;
+    height: 8px;
+    border-radius: 50px;
+}
+
+/* .kebijakan-box-pill-green,
+.kebijakan-box-pill-silver {
+    width: 300px;
+} */
+
+.kebijakan-box-pill-blue {
+    background: #1868AB;
+}
+
+.kebijakan-box-pill-red {
+    background: #EA5455;
+}
+
+.kebijakan-box-pill-orange {
+    background: #F6AD1D;
+}
+
+.kebijakan-box-pill-green {
+    background: #11C15B;
+}
+
+.kebijakan-box-pill-silver {
+    background: #DBDBDB;
+}
+
+@media (max-width:991px) {
+    .kebijakan-box-container {
+        flex-wrap: wrap-reverse;
+    }
+
+    .kebijakan-box1,
+    .kebijakan-box2,
+    .kebijakan-box3,
+    .kebijakan-box4,
+    .kebijakan-box5 {
+        border: 1px solid #E1E1E1;
+    }
+
+}
+
+@media (max-width:768px) {
+    .kebijakan-header-title {
+        font-size: 30px;
+        /* padding-bottom: 20px; */
+    }
+    .kebijakan-header-subtitle {
+        font-size: 17px;
+    }
+
+}
+
+@media (max-width:426px){
+    /* .zone-kebijakan{
+        padding: 0 20px;
+    } */
+    .kebijakan-header-title {
+        font-size: 30px;
+        /* padding-bottom: 20px; */
+    }
+    .kebijakan-header-subtitle {
+        font-size: 17px;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .main-kebijakan-header{
+        padding-top: 30px;
+    }
+}
+
+/* ============================================================================================== */
+
+/* ======================================== Section Media ======================================== */
+
+.main-media {
+    background-color: #002A52;
+    /* padding:  60px 120px 80px 120px; */
+}
+
+.media-img {
+    width: 100%;
+}
+
+.media-title {
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.main-media-card {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding-top: 50px;
+    justify-content: center;
+}
+
+.media-card {
+    /* display: flex;
+    flex-direction: column; */
+    /* width: 100%; */
+    background-color: white;
+    border-radius: 15px;
+}
+
+.media-card-body {
+    /* background-color: #11C15B; */
+    height: 100%;
+    padding: 24px 32px;
+}
+
+.media-card-title {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 20px;
+
+}
+
+.media-card-description {
+    font-weight: 500;
+    font-size: 15px;
+    height: auto;
+}
+
+.media-card-footer {
+    padding: 24px 32px;
+}
+
+.btn-outline-black,
+.btn-outline-white,
+.btn-media,.btn-berita {
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 15px 30px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-outline-white{
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+}
+
+.btn-outline-black{
+    border: 1px solid #6B7280;
+    background-color: transparent;
+    color: #6B7280;
+}
+
+.btn-berita {
+    width: 275px;
+}
+
+.btn-media {
+    width: auto;
+}
+
+/* @media (max-width:1200px) {
+
+    .main-media-card {
+        display: none !important;
+    }
+
+    .media-card {
+        width: 49%;
+        margin: 0;
+    }
+
+    .btn-media {
+        width: 100%;
+    }
+
+} */
+
+
+
+@media (max-width:767px) {
+    .media-card {
+        width: auto;
+    }
+
+    .main-media {
+        padding: 20px;
+    }
+
+    .main-media-card {
+        flex-direction: column;
+    }
+}
+
+/* @media (max-width:480px) {
+    .main-media{
+        padding: 50px 20px;
+    }
+    
+} */
+/* ============================================================================================== */
+
+/* ======================================== Section Fasilitas ======================================== */
+
+.main-fasilitas {
+    padding: 120px;
+}
+
+.main-fasilitas-card {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: center;
+
+}
+
+.fasilitas-card-header {
+    /* width: auto; */
+    border-radius: 8px;
+    position: absolute;
+    top: -20px;
+    padding: 0 15px;
+    left: 0;
+    right: 0;
+
+}
+
+.fasilitas-card-header-text {
+    /* width: 10px; */
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-align: center;
+    background: #002A52;
+    padding: 10px 0px;
+    border-radius: 8px;
+
+}
+
+.fasilitas-card {
+    /* width: 100%; */
+    height: auto;
+    position: relative;
+    background: #F4F7FE;
+    /* background-color: red; */
+    box-shadow: 0px 4px 8px 0px #00000014;
+    /* padding: 65px; */
+}
+
+.fasilitas-zone {
+    width: auto;
+    position: relative;
+}
+
+.facility-img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width:991px) {
+    .main-fasilitas {
+        padding: 40px;
+    }
+
+    .main-fasilitas-card {
+        flex-wrap: wrap;
+    }
+}
+
+/* ============================================================================================== */
+
+/* ======================================== Section Berita ======================================== */
+
+.main-berita{
+    background: #002A52;
+    /* padding: 72px 100px; */
+}
+
+.berita-header-title{
+    color: white;
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.main-berita-component {
+    /* background-color: #EA5455; */
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    padding-top: 32px;
+    justify-content: center;
+}
+
+.zone-line{
+    padding: 0 50px;
+}
+
+.vertical-line-berita{
+    border-left: 1px solid white;
+    height: 100vh;
+    text-align: center;
+    margin: 0 auto;
+    background-position: center center;
+}
+
+.horizontal-line-berita{
+    border: 1px solid white;
+    width: 100%;
+    height: 1px;
+    display: none;
+}
+
+.highlight-news-card{
+    display: flex;
+    flex-direction: column;
+    flex: 5;
+}
+
+.highlight-news-card-header{
+    padding-bottom: 16px;
+}
+
+.highlight-news-card-date{
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    padding-bottom: 16px;
+}
+
+.highlight-news-card-title{
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 56px;
+    color: white;
+    padding-bottom: 16px;
+}
+
+.highlight-news-card-description{
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    padding-bottom: 40px;
+    line-height: 28px;
+}
+
+.main-subhighlight-news{
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+}
+
+.spacer-subhighlight{
+    padding: 0 100px;
+}
+
+.subhighlight-news-card{
+    /* display: flex;
+    flex-direction: row; */
+    padding-bottom: 24px !important;
+}
+
+.subhighlight-news-header{
+   /* width: 400px;
+   height: 245px; */
+   flex:6;
+}
+
+.subhighlight-news-card-body{
+    /* display: flex;
+    flex-direction: column; */
+   padding-left: 25px;
+   flex: 6;
+}
+
+.subhighlight-news-card-date{
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    padding-bottom: 15px;
+}
+
+.subhighlight-news-card-title{
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    padding-bottom: 15px;
+}
+
+.subhighlight-news-card-description{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    /* padding-bottom: 15px;    */
+}
+
+.subhighlight-img {
+    width: 100%;
+    height: 100%;
+}
+
+.subhighlight-more{
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: white;
+    /* padding-top: 20px; */
+}
+
+@media (max-width:1400px){
+    .main-berita-component{
+        flex-direction: column;
+    }
+    .zone-line{
+        padding: 20px 0;
+    }
+    .vertical-line-berita{
+        display: none;
+    }
+    .horizontal-line-berita{
+        display: block;
+    }
+}
+
+/* @media (max-width:991px){
+    .main-berita-component{
+        flex-direction: column;
+    }
+    .zone-line{
+        padding: 20px 0;
+    }
+    .vertical-line-berita{
+        display: none;
+    }
+    .horizontal-line-berita{
+        display: block;
+    }
+} */
+
+@media (max-width:768px){
+    .subhighlight-news-card{
+        flex-direction: column;
+    }
+    .subhighlight-news-card-body{
+        padding: 10px 0 0 0;
+    }
+    .highlight-news-card-date{
+        font-size: 15px;
+        padding-bottom: 0px;
+    }
+}
+
+
+/* @media (max-width:426px){
+    .main-berita{
+        padding: 50px 40px;
+    }
+} */
+
+/* ============================================================================================== */
+
+/* ======================================== Section Social Media ======================================== */
+
+.main-social-media{
+    background: #CCDDED;
+    padding: 72px 100px;
+}
+
+.main-list-social-media2{
+    display: block;
+}
+
+.social-media-zone{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.social-media-line-text{
+    display: none;
+    letter-spacing: 12px;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.main-list-social-media{
+    /* background-color: #11C15B; */    
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 100px;
+}
+
+.social-media-banner{
+    /* width: 20%; */
+    flex: 2;
+    position: relative;
+}
+.social-media-line-img{
+    width: 100%;
+}
+
+.social-media-banner-img{
+    width: 100%;
+}
+
+.social-media-banner-iframe{
+    /* background-color: white; */
+    position: relative;
+    border-radius: 20px;
+    /* box-shadow: -1px 6px 30px -12px rgba(0,0,0,1); */
+    width: 100%;
+    height: auto;
+    overflow-y: scroll;
+    /* top:0;
+    left: 100px;
+    right: 0;
+    bottom: 0; */
+}
+
+/* .social-media-banner-iframe:hover{
+    background-color: red;
+} */
+
+.social-media-banner-iframe:hover::-webkit-scrollbar-thumb{
+    background-color: #05274A;
+}
+
+.social-media-banner-iframe::-webkit-scrollbar{
+    width: 12px;
+}
+
+.social-media-banner-iframe::-webkit-scrollbar-thumb{
+    background-color: #05274A;
+}
+
+.social-media-name-fb,.social-media-name-yt,.social-media-name-tw,.social-media-name-ig{
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    color: #7E7E7E;
+}
+
+.btn-sosmed-fb,.btn-sosmed-yt,.btn-sosmed-tw,.btn-sosmed-ig,.social-media-name-fb,.social-media-name-yt,.social-media-name-tw,.social-media-name-ig:hover{
+    cursor: pointer;
+}
+
+.btn-sosmed-fb,.btn-sosmed-yt,.btn-sosmed-tw,.btn-sosmed-ig{
+    background-color: #7E7E7E;
+    width: 45px;
+    height: 45px;
+}
+
+.zone-sosmed-fb,.zone-sosmed-yt,.zone-sosmed-tw,.zone-sosmed-ig{
+    display: none;
+}
+
+.btn-sosmed-active{
+    background-color: #002A52;
+}
+
+.social-media-name-active{
+    color: #002A52;
+}
+
+.zone-sosmed-active{
+    display: block;
+}
+
+
+#iyoutube{
+    padding: 20 10%;
+    width:100%;
+    height: 50vh;
+}
+
+#ifacebook{
+    padding: 0 10%;
+    width:500px;
+    height: 843px;
+}
+
+.unHover{
+    pointer-events: none;
+}
+
+@media (max-width:991px){
+    .social-media-zone{
+        flex-direction: column;
+    }
+    .main-vertical-word-line{
+        padding-top: 50px;
+        width: auto;
+        /* background-color: red; */
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+        margin:-500px;
+    }
+        
+    /* .main-list-social-media{
+        background-color: green;
+    } */
+}
+
+@media (max-width:768px){
+    .main-vertical-word-line{
+        display: none;
+    }
+    .social-media-line-text{
+        display: block;
+    }
+}
+
+@media (max-width:426px){
+    .social-media-name-fb,.social-media-name-yt,.social-media-name-tw,.social-media-name-ig{
+        display: none;
+    }
+    .main-list-social-media{
+        /* background-color: #11C15B; */    
+        flex-direction: row;
+        gap: 10;
+    }
+    .social-media-line-text{
+        letter-spacing: 0px;
+    }
+    .main-list-social-media{
+        padding: 50px;
+    }
+}
+
+
+.special .card-body {
+    flex-grow: 0 !important;
+  }

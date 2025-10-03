@@ -1,0 +1,12 @@
+.zone-search-active{
+    display: block;
+}
+
+.zone-search-disable{
+    display: none;
+}
+
+.input-group-text{
+    background-color: white;
+    border: none;
+}

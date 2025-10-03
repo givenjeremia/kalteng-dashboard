@@ -1,0 +1,93 @@
+.other-info-title,.other-info-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* color: w; */
+  }
+
+.other-info-description{
+    -webkit-line-clamp: 3;
+}
+
+.agenda-box{
+  border-left: 1px solid #999999;
+  border-right: 1px solid #999999;
+}
+
+@media(max-width:768px){
+  .agenda-box{
+    border-left: none;
+  border-right: none;
+  /* border-top: 1px solid #999999;
+  border-bottom: 1px solid #999999; */
+  }
+}
+
+/* CAROUSEL FASILITAS*/
+#carousel-facility-eselon .owl-stage{
+  right: -50px;
+}
+
+
+#carousel-facility-eselon .owl-nav button.owl-prev {
+  left: 0;
+}
+
+#carousel-facility-eselon .owl-nav button.owl-next {
+  right: 0;
+}
+
+#carousel-facility-eselon .owl-nav button.owl-next {
+  position: absolute;
+  width: 50px;
+  height: 100%;
+  top: 50%;
+  font-size: 30px;
+  transform: translateY(-50%);
+  background: linear-gradient(270deg, rgba(3, 37, 92, 0.7) 3.65%, rgba(217, 217, 217, 0) 100%) !important;
+  color: #fff;
+  margin: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+#carousel-facility-eselon .owl-nav button.owl-prev{
+  position: absolute;
+  width: 50px;
+  height: 100%;
+  top: 50%;
+  font-size: 30px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, rgba(3, 37, 92, 0.7) 3.65%, rgba(217, 217, 217, 0) 100%) !important;
+  color: #fff;
+  margin: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+#carousel-facility-eselon .owl-nav{
+  margin-top: 0 !important;
+}
+/* #carousel-facility-eselon .owl-nav button.owl-prev {
+  transform: translateY(-30%) translateX(-50%);
+}
+
+#carousel-facility-eselon .owl-nav button.owl-next {
+  transform: translateY(-50%) translateX(50%);
+} */
+
+#carousel-facility-eselon .owl-carousel .owl-nav button.owl-prev {
+  font-size: 30px !important;
+}
+
+#carousel-facility-eselon .owl-carousel .owl-nav button.owl-next {
+  font-size: 30px !important;
+}
+
+#carousel-facility-eselon .owl-nav button:focus {
+  outline: none;
+}
+
+#carousel-facility-eselon .owl-nav .disabled{
+  display: none;
+}
