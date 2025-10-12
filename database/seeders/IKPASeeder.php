@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Departement;
-use App\Models\IkpaScore;
+use App\Models\IKPAScore;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 

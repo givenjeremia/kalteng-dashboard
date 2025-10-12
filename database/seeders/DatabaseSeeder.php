@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(BudgetSeeder::class);
 
 
-        $this->call(NewBudgetSeeder::class);
+        // $this->call(NewBudgetSeeder::class);
         $this->call(IKPASeeder::class);
         $this->call(EPerformanceSeeder::class);
         $this->call(EMonevSeeder::class);
