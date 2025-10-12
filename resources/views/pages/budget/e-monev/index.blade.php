@@ -1,8 +1,8 @@
 @extends('layouts.base')
-@section('title','Departements')
+@section('title','Budget - E-Monev')
 
 @section('toolbar')
-@include('components/toolbar',['title' => 'Departements'])
+@include('components/toolbar',['title' => 'Budget/E-Monev'])
 @endsection
 
 @section('content')
@@ -36,53 +36,43 @@
 @endsection
 
 @section('scripts')
+
 <script>
     $(document).ready(function() {
-        var datatable = $('#kt_table').DataTable({
-            "initComplete": function() {
-                $('#kt_majalah_kategori_table thead').addClass('bg-light-secondary fw-bold');
+        var datatableEmonev = $('#kt_table').DataTable({
+            initComplete: function() {
+                $('#kt_table thead').addClass('bg-light-secondary fw-bold');
             },
-            "columnDefs": [{
-                "defaultContent": "-",
-                "targets": "_all"
-            }],
+            columnDefs: [{ defaultContent: "-", targets: "_all" }],
             processing: true,
             serverSide: true,
-            ajax: "{{ route('departements.index') }}",
+            ajax: "{{ route('e-monev.index') }}",
             columns: [
-                {
-                    data: 'No',
-                    name: 'No',
-                    title: 'No',
-                    className: 'px-5 text-nowrap'
-                },
-                {
-                    data: 'Name',
-                    name: 'Name',
-                    title: 'Name',
-                    className: 'text-nowrap'
-                },
-                {
-                    data: 'Action',
-                    name: 'Action',
-                    title: 'Action',
-                    className: 'text-nowrap px-5'
-                },
-          
-            ],
-         
+                { data: 'No', name: 'No', title: 'No', className: 'px-5 text-nowrap' },
+                { data: 'Departement', name: 'Departement', title: 'Departement', className: 'text-nowrap' },
+                { data: 'Bulan', name: 'Bulan', title: 'Bulan', className: 'text-nowrap' },
+                { data: 'Tahun', name: 'Tahun', title: 'Tahun', className: 'text-nowrap' },
+                { data: 'Anggaran', name: 'Anggaran', title: 'Anggaran', className: 'text-nowrap' },
+                { data: 'Fisik', name: 'Fisik', title: 'Fisik', className: 'text-nowrap' },
+                { data: 'GAP', name: 'GAP', title: 'GAP', className: 'text-nowrap' },
+                { data: 'Kinerja', name: 'Kinerja', title: 'Kinerja Satker', className: 'text-nowrap' },
+                { data: 'Keterangan', name: 'Keterangan', title: 'Keterangan', className: 'text-nowrap' },
+                { data: 'Action', name: 'Action', title: 'Action', className: 'px-5 text-nowrap' }
+            ]
         });
-        const filterSearch = document.querySelector('[data-kt-filter="search"]');
+    
+        const filterSearch = document.querySelector('[data-kt-filter="search-emonev"]');
         filterSearch.addEventListener('keyup', function (e) {
-            datatable.search(e.target.value).draw();
+            datatableEmonev.search(e.target.value).draw();
         });
     });
-</script>
+    </script>
+    
 <script>
     $('#btnTambah').on('click',function (e){
         e.preventDefault();
         $.ajax({
-            url: "{{ route('departements.create') }}"
+            url: "{{ route('e-monev.create') }}"
             , method: "GET"
             , success: function(response) {
                 $('#modal-div').html("");
@@ -104,7 +94,7 @@
 </script>
 <script>
     function showModalUpdate(data){
-        let url = "{{ route('departements.edit', ':id') }}".replace(':id', data)
+        let url = "{{ route('e-monev.edit', ':id') }}".replace(':id', data)
         $.ajax({
             url: url,
             method: "GET",
@@ -143,7 +133,7 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                let url = "{{ route('departements.destroy', ':id') }}".replace(':id', data)
+                let url = "{{ route('e-monev.destroy', ':id') }}".replace(':id', data)
                 $.ajax({
                     url: url,
                     method: "DELETE",
@@ -181,4 +171,5 @@
         })
     }
 </script>
+
 @endsection

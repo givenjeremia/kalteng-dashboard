@@ -19,9 +19,38 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="fv-row mt-3">
-                        <label for="required" class="required fs-6 fw-semibold mb-2">Nama</label>
-                        <input type="text" class="form-control" name="title" value="{{ $data->title }}" placeholder="Tuliskan Nama Departements">
+                        <label for="required" class="fs-6 fw-semibold mb-2">Departement</label>
+                        <select name="departement_id" class="form-control form-select">
+                            <option value="">Pilih Departements</option>
+
+                            @foreach ($departements as $item)
+                                <option value="{{ $item->pkid }}" {{ $data->departement_id == $item->pkid ? 'selected' : '' }}>{{ $item->title }}</option>
+                                
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="fv-row mt-3">
+                        <label for="type_data" class="required fs-6 fw-semibold mb-2">Tipe Data</label>
+                        <select name="type_data" id="type_data" class="form-select" data-control="select2" data-placeholder="Pilih Tipe Data" required>
+                            <option value="">Pilih Tipe Data</option>
+                            <option value="pegawai" {{ old('type_data', $data->type_data ?? '') == 'pegawai' ? 'selected' : '' }}>Belanja Pegawai</option>
+                            <option value="barang" {{ old('type_data', $data->type_data ?? '') == 'barang' ? 'selected' : '' }}>Belanja Barang</option>
+                            <option value="modal" {{ old('type_data', $data->type_data ?? '') == 'modal' ? 'selected' : '' }}>Belanja Modal</option>
+                        </select>
+                    </div>
+                    
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Tahun</label>
+                        <input type="number" class="form-control" name="tahun" value="{{ $data->tahun }}"  placeholder="Tuliskan Tahun">
+                    </div>
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Nominal</label>
+                        <input type="number" class="form-control" name="nominal" value="{{ $data->nominal }}"  placeholder="Tuliskan Nominal">
                     </div>
                 
                 </div>
@@ -57,7 +86,7 @@
             , cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                let act = "{{ route('departements.update',':id') }}".replace(':id','{{ $data->uuid }}')
+                let act = "{{ route('ceilings.update',':id') }}".replace(':id','{{ $data->uuid }}')
                 let form_data = new FormData(document.querySelector("#update_form"));
                 form_data.append('_token', '{{ csrf_token() }}')
                 $.ajax({

@@ -141,7 +141,7 @@
           }
         },
         fill: {
-          colors: [persen < 80 ? "#4CAF50" : "#e53935"] 
+          colors: [persen > 80 ? "#4CAF50" : "#e53935"] 
         },
         stroke: { lineCap: "round" }
       };
@@ -163,8 +163,7 @@
         createGauge("modalGauge", "Realisasi Modal", data.modalRealisasi, data.modalTotal);
         createGauge("pegawaiGauge", "Realisasi Pegawai", data.pegawaiRealisasi, data.pegawaiTotal);
         createGauge("belanjaGauge", "Realisasi Barang", data.barangRealisasi, data.barangTotal);
-  
-        // Line Chart → tetap manual
+        
         new ApexCharts(document.querySelector("#lineChart"), {
             chart: { height: 350, type: 'line' },
             series: [
@@ -218,7 +217,7 @@
                         processing: true,
                         pageLength: 10,
                         lengthMenu: [5, 10, 25, 50],
-                        order: [[1, 'asc']], // sort default: bulan/tahun
+                        order: [[1, 'asc']], 
                 
                         language: {
                             lengthMenu: "Show _MENU_",
@@ -226,7 +225,7 @@
                             infoEmpty: "No records available",
                         },
                 
-                        // optional: style Metronic
+
                         dom:
                             "<'row'" +
                             "<'col-sm-6 d-flex align-items-center justify-content-start'l>" +

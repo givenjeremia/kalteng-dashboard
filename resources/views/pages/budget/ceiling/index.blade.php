@@ -1,8 +1,8 @@
 @extends('layouts.base')
-@section('title','Departements')
+@section('title','Budget - Celling')
 
 @section('toolbar')
-@include('components/toolbar',['title' => 'Departements'])
+@include('components/toolbar',['title' => 'Budget/Celling'])
 @endsection
 
 @section('content')
@@ -36,11 +36,12 @@
 @endsection
 
 @section('scripts')
+
 <script>
     $(document).ready(function() {
         var datatable = $('#kt_table').DataTable({
             "initComplete": function() {
-                $('#kt_majalah_kategori_table thead').addClass('bg-light-secondary fw-bold');
+                $('#kt_table thead').addClass('bg-light-secondary fw-bold');
             },
             "columnDefs": [{
                 "defaultContent": "-",
@@ -48,7 +49,7 @@
             }],
             processing: true,
             serverSide: true,
-            ajax: "{{ route('departements.index') }}",
+            ajax: "{{ route('ceilings.index') }}",
             columns: [
                 {
                     data: 'No',
@@ -57,11 +58,30 @@
                     className: 'px-5 text-nowrap'
                 },
                 {
-                    data: 'Name',
-                    name: 'Name',
-                    title: 'Name',
+                    data: 'Departement',
+                    name: 'Departement',
+                    title: 'Departement',
                     className: 'text-nowrap'
                 },
+                {
+                    data: 'Nominal',
+                    name: 'Nominal',
+                    title: 'Nominal',
+                    className: 'text-nowrap'
+                },
+                {
+                    data: 'Type Data',
+                    name: 'Type Data',
+                    title: 'Type Data',
+                    className: 'text-nowrap'
+                },
+                {
+                    data: 'Tahun',
+                    name: 'Tahun',
+                    title: 'Tahun',
+                    className: 'text-nowrap'
+                },
+                
                 {
                     data: 'Action',
                     name: 'Action',
@@ -82,7 +102,7 @@
     $('#btnTambah').on('click',function (e){
         e.preventDefault();
         $.ajax({
-            url: "{{ route('departements.create') }}"
+            url: "{{ route('ceilings.create') }}"
             , method: "GET"
             , success: function(response) {
                 $('#modal-div').html("");
@@ -104,7 +124,7 @@
 </script>
 <script>
     function showModalUpdate(data){
-        let url = "{{ route('departements.edit', ':id') }}".replace(':id', data)
+        let url = "{{ route('ceilings.edit', ':id') }}".replace(':id', data)
         $.ajax({
             url: url,
             method: "GET",
@@ -143,7 +163,7 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                let url = "{{ route('departements.destroy', ':id') }}".replace(':id', data)
+                let url = "{{ route('ceilings.destroy', ':id') }}".replace(':id', data)
                 $.ajax({
                     url: url,
                     method: "DELETE",
@@ -181,4 +201,5 @@
         })
     }
 </script>
+
 @endsection

@@ -1,14 +1,7 @@
-{{-- @extends('layouts.base')
-@section('title','Performance Admin')
-
-@section('toolbar')
-@include('components/toolbar',['title' => 'Performance Admin'])
-@endsection
-
-@section('content')
-
-
 <div class="card card-flush">
+    <div class="card-header">
+        <h3 class="card-title">Data Performances Month {{ $bulan }} Year {{ $tahun }}</h3>
+    </div>
     <div class="card-body">
         <table class="table table-bordered align-middle rounded-4">
             <thead class="table-secondary">
@@ -70,38 +63,4 @@
         
     </div>
 </div>
-
-
-<div id="modal-div"></div>
-
-@endsection
-
-@section('scripts')
-<script>
-    $('#performance-form').on('submit', function(e) {
-        e.preventDefault();
-
-        let formData = new FormData(this);
-
-        $.ajax({
-            url: "{{ route('performances.store') }}",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(res) {
-                if (res.status === 'success') {
-                    alert(res.message);
-                    location.reload()
-                } else {
-                    alert(res.message);
-                }
-            },
-            error: function(xhr) {
-                alert("Terjadi error: " + xhr.responseJSON?.message);
-            }
-        });
-    });
-
-</script>
-@endsection --}}
+<script src="{{ asset('assets/plugins/custom/fslightbox/fslightbox.bundle.js') }}"></script>

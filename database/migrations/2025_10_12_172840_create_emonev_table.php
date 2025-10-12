@@ -11,20 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('budgets', function (Blueprint $table) {
+        Schema::create('emonev', function (Blueprint $table) {
             $table->bigIncrements('pkid');
             $table->uuid('uuid')->unique();
+
+    
             $table->foreignId('departement_id')->nullable()->constrained('departements', 'pkid');
 
-            $table->bigInteger('pagu_pegawai')->default(0);
-            $table->bigInteger('pagu_barang')->default(0);
-            $table->bigInteger('pagu_modal')->default(0);
-            $table->bigInteger('realisasi_pegawai')->default(0);
-            $table->bigInteger('realisasi_barang')->default(0);
-            $table->bigInteger('realisasi_modal')->default(0);
-            
-            $table->integer('tahun');
-            $table->integer('bulan');
+    
+            $table->integer('tahun')->default(date('Y'));
+            $table->integer('bulan')->default(1);
+
+
+            $table->decimal('anggaran', 12, 2)->default(0);
+            $table->decimal('fisik', 12, 2)->default(0);
+            $table->decimal('gap', 12, 2)->default(0);
+            $table->decimal('kinerja_satker', 6, 2)->default(0);
+            $table->string('keterangan')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -36,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('budgets');
+        Schema::dropIfExists('emonev');
     }
 };

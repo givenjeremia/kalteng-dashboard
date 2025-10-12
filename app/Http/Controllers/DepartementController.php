@@ -41,7 +41,7 @@ class DepartementController extends Controller
                     $encryptedIdString = "'".$item->uuid."'";
                     $button ='
                     <button onclick="showModalUpdate('.$encryptedIdString.')" class="btn btn-primary border border-1  py-2"><i class="fa-solid fa-pen"></i></button>
-                    <button onclick="deleteTipe('.$encryptedIdString.')" class="btn btn-danger border border-1  py-2"><i class="fa-solid fa-trash"></i></button>';
+                    <button onclick="deleteData('.$encryptedIdString.')" class="btn btn-danger border border-1  py-2"><i class="fa-solid fa-trash"></i></button>';
                     return $button;
                 })
                 ->rawColumns(['No','Name','Action'])

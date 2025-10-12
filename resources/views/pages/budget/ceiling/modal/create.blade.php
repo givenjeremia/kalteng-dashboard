@@ -1,13 +1,12 @@
-<form id="update_form">
-    @method('put')
-    <div class="modal fade" id="kt_modal_update" tabindex="-1" aria-hidden="true">
+<form id="add_form">
+    <div class="modal fade" id="kt_modal_add" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content rounded">
                 <div class="modal-body scroll-y ">
                     <div class="fv-row">
                         <div class="d-flex align-content-between flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                             <div class="text-start d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3 py-lg-0">
-                                <h3 class="modal-title pt-2">Update Data</h3>
+                                <h3 class="modal-title pt-2">Tambah Data</h3>
                             </div>
                             <div>
                                 <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-modal-action-type="close" data-bs-dismiss="modal">
@@ -19,9 +18,38 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="fv-row mt-3">
-                        <label for="required" class="required fs-6 fw-semibold mb-2">Nama</label>
-                        <input type="text" class="form-control" name="title" value="{{ $data->title }}" placeholder="Tuliskan Nama Departements">
+                        <label for="required" class="fs-6 fw-semibold mb-2">Departement</label>
+                        <select name="departement_id" class="form-control form-select">
+                            <option value="">Pilih Departements</option>
+
+                            @foreach ($departements as $item)
+                                <option value="{{ $item->pkid }}">{{ $item->title }}</option>
+                                
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="fv-row mt-3">
+                        <label for="type_data" class="required fs-6 fw-semibold mb-2">Tipe Data</label>
+                        <select name="type_data" id="type_data" class="form-select " data-control="select2" data-placeholder="Pilih Tipe Data" required>
+                            <option value="">Pilih Tipe Data</option>
+                            <option value="pegawai">Belanja Pegawai</option>
+                            <option value="barang">Belanja Barang</option>
+                            <option value="modal">Belanja Modal</option>
+                        </select>
+                    </div>
+                    
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Tahun</label>
+                        <input type="number" class="form-control" name="tahun" placeholder="Tuliskan Tahun">
+                    </div>
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Nominal</label>
+                        <input type="number" class="form-control" name="nominal" placeholder="Tuliskan Nominal">
                     </div>
                 
                 </div>
@@ -41,14 +69,14 @@
 
 <script>
     $(document).ready(function() {
-        $('#kt_modal_update').modal('show');
+        $('#kt_modal_add').modal('show');
     });
 
     $('#btn-simpan').click(function(e) {
         e.preventDefault();
         Swal.fire({
-            title: "Ubah Data"
-            , text: "Apakah Anda Yakin Ingin Mengubah Data?"
+            title: "Tambah Data"
+            , text: "Apakah Anda Yakin Ingin Menambahkan Data?"
             , icon: 'warning'
             , target: document.getElementById('content')
             , reverseButtons: true
@@ -57,8 +85,8 @@
             , cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                let act = "{{ route('departements.update',':id') }}".replace(':id','{{ $data->uuid }}')
-                let form_data = new FormData(document.querySelector("#update_form"));
+                let act = '{{ route("ceilings.store") }}'
+                let form_data = new FormData(document.querySelector("#add_form"));
                 form_data.append('_token', '{{ csrf_token() }}')
                 $.ajax({
                     url: act
@@ -75,7 +103,7 @@
                                 , buttonsStyling: false
                                 , showConfirmButton: false
                             }).then(function(result) {
-                                $('#kt_modal_update').modal('hide');
+                                $('#kt_modal_add').modal('hide');
                                 $('#kt_table').DataTable().ajax.reload();
                             });
 

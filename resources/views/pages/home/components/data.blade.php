@@ -77,9 +77,53 @@
     </div>
 </div>
 
+<div class="row g-5">
+    <!-- IKPA -->
+    <div class="col-md-4">
+        <div class="card text-center p-5 h-100" >
+            <h5 class="fw-bold">IKPA</h5>
+            <div class="text-success fs-1 fw-bolder mt-3">{{ $ikpaRataRata }}%</div>
+            <div class="text-muted fs-6 mt-2">Keterangan IKPA: {{ $ikpaKeterangan }}</div>
+        </div>
+    </div>
+
+    <!-- E-Performance -->
+    <div class="col-md-4">
+        <div class="card text-center p-5 h-100">
+            <h5 class="fw-bold">E-Performance</h5>
+            <div class="text-success fs-1 fw-bolder mt-3">{{ $eperformanceCapaian }}%</div>
+        </div>
+    </div>
+
+    <!-- E-Monev Bappenas -->
+    <div class="col-md-4">
+        <div class="card p-5 h-100">
+            <h5 class="fw-bold text-center">E-Monev Bappenas</h5>
+            <div class="mt-4">
+                <div class="d-flex justify-content-between">
+                    <span class="fw-semibold text-gray-600">Kinerja Satker</span>
+                    <span class="fw-bold">{{ $emonevKinerja }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-semibold text-gray-600">Anggaran</span>
+                    <span class="fw-bold">{{ $emonevAnggaran }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-semibold text-gray-600">Fisik</span>
+                    <span class="fw-bold">{{ $emonevFisik }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-semibold text-gray-600">GAP</span>
+                    <span class="fw-bold">{{ $emonevGAP }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {{-- Table --}}
-<div class="card card-flush my-3">
+{{-- <div class="card card-flush my-3">
     <div class="card-body">
         <h3>Histori Data Hingga Bulan {{ $bulan }} Pada Tahun {{ $tahun }}</h3>
         <table class="table table-hover table-rounded table-striped border gy-7 gs-7" id="budget-table">
@@ -127,5 +171,5 @@
         </table>
         
     </div>
-</div>
+</div> --}}
 

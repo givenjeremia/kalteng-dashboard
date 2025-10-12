@@ -7,27 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Budget extends Model
+class Ceiling extends Model
 {
     use HasFactory,SoftDeletes;
     protected $primaryKey = 'pkid';
     public $incrementing = true;
     protected $keyType = 'int';
-    protected $fillable = [
-        'departement_id',
-        'pagu_pegawai',
-        'realisasi_pegawai',
-        'pagu_barang',
-        'realisasi_barang',
-        'pagu_modal',
-        'realisasi_modal',
-        'tahun',
-        'bulan',
-    ];
+
+    protected $fillable = ['departement_id','tahun','bulan','nominal','type_data'];
 
     protected static function boot()
     {
         parent::boot();
+
         static::creating(function ($model) {
             if (empty($model->uuid)) {
                 $model->uuid = (string) Str::uuid();
@@ -39,11 +31,4 @@ class Budget extends Model
     {
         return $this->belongsTo(Departement::class, 'departement_id', 'pkid');
     }
-
-    public function ceiling()
-    {
-        return $this->belongsTo(Ceiling::class, 'ceiling_id', 'pkid');
-    }
-
-
 }

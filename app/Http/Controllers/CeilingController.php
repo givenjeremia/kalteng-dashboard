@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ceiling;
 use App\Models\Departement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\FileCategory;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class CeilingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +20,7 @@ class UserController extends Controller
 
                 return $this->tableDataAdmin();
             }
-            return view('pages.users.index');
+            return view('pages.budget.ceiling.index');
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -32,39 +29,39 @@ class UserController extends Controller
     public function tableDataAdmin(){
         if (request()->ajax())
         {
-            $data = User::orderBy('id','desc')->get();
+            $data = Ceiling::orderBy('pkid','desc')->get();
             $counter = 1;
             return Datatables::of($data)
                 ->addColumn('No', function () use (&$counter)  {
                     return $counter++;
                 })
-                ->addColumn('Name', function($item) {
-                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->name.'</span>';
-                })
-                ->addColumn('Username', function($item) {
-                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->username.'</span>';
-                })
-                ->addColumn('Email', function($item) {
-                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->email.'</span>';
-                })
                 ->addColumn('Departement', function($item) {
                     if($item->departement){
-
                         return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->departement->title.'</span>';
                     }
                     return '-';
                 })
-                ->addColumn('Role', function($item) {
-                    return '<span class="text-gray-800 fs-5 fw-bold mb-1">'.$item->getRoleNames()->first().'</span>';
+                ->addColumn('Bulan', function($item) {
+                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->bulan.'</span>';
+                })
+                ->addColumn('Nominal', function($item) {
+                    $formatted = number_format($item->nominal, 0, ',', '.');
+                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">Rp. '.$formatted.'</span>';
+                })
+                ->addColumn('Tahun', function($item) {
+                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->tahun.'</span>';
+                })
+                ->addColumn('Type Data', function($item) {
+                    return '<span  class="text-gray-800 fs-5 fw-bold mb-1">'.$item->type_data.'</span>';
                 })
                 ->addColumn('Action', function ($item) {
-                    $encryptedIdString = "'".strval(encrypt($item->id))."'";
+                    $encryptedIdString = "'".$item->uuid."'";
                     $button ='
                     <button onclick="showModalUpdate('.$encryptedIdString.')" class="btn btn-primary border border-1  py-2"><i class="fa-solid fa-pen"></i></button>
                     <button onclick="deleteData('.$encryptedIdString.')" class="btn btn-danger border border-1  py-2"><i class="fa-solid fa-trash"></i></button>';
                     return $button;
                 })
-                ->rawColumns(['No','Name','Username','Email','Departement','Role','Action'])
+                ->rawColumns(['No','Departement','Bulan','Type Data','Nominal','Tahun','Action'])
                 ->make(true);
         }
 
@@ -76,13 +73,8 @@ class UserController extends Controller
     public function create()
     {
         try {
-            $roles = Role::all();
             $departements = Departement::all();
-
-            return response()->json([
-                'status' => 'success',
-                'msg'    => view('pages.users.modal.create', compact('roles','departements'))->render()
-            ], 200);
+            return response()->json(array('status' => 'success','msg' =>  view('pages.budget.ceiling.modal.create',compact('departements'))->render()), 200);
         } catch (\Throwable $e) {
             return response()->json(array('status' => 'error','msg' => 'Gagal Menampilkan Form Tambah','err'=>$e->getMessage()), 200);
         }
@@ -95,27 +87,13 @@ class UserController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name' => 'required',
-                'username' => 'required',
-                'email' => 'required',
-                'password' => 'required',
-                'departement_id' => 'nullable|exists:departements,pkid',
-                'role'      => 'nullable|exists:roles,name',
-            ]);
-
-            $user = User::create([
-                'name'          => $validated['name'],
-                'username'      => $validated['username'],
-                'email'         => $validated['email'],
-                'password'      => Hash::make($validated['password']),
-                'departement_id'=> $validated['departement_id'] ?? null,
+                'departement_id' => 'required',
+                'bulan' => 'required',
+                'tahun' => 'required',
+                'nominal' => 'required',
             ]);
     
-        
-            if (!empty($validated['role'])) {
-                $user->assignRole($validated['role']);
-            }
-            
+            Ceiling::create($validated);
     
             return response()->json([
                 'status' => 'success',
@@ -134,7 +112,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Ceiling $ceiling)
     {
         //
     }
@@ -145,11 +123,12 @@ class UserController extends Controller
     public function edit(string $id)
     {
         try {
-            $data = User::find($id);
+            $data = Ceiling::where('uuid',$id)->firstOrFail();
+            $departements = Departement::all();
         
             return response()->json([
                 'status' => 'success',
-                'msg'    => view('pages.users.modal.update', compact('data'))->render()
+                'msg'    => view('pages.budget.ceiling.modal.update', compact('data','departements'))->render()
             ], 200);
         
         } catch (\Throwable $e) {
@@ -168,34 +147,15 @@ class UserController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name'      => 'required',
-                'username'  => 'required',
-                'email'     => 'required', 
-                'password'  => 'nullable|min:6',
-                'departement_id' => 'nullable|exists:departements,pkid',
-                'role'      => 'nullable|exists:roles,name',
+                'departement_id' => 'required',
+                'bulan' => 'required',
+                'tahun' => 'required',
+                'nominal' => 'required',
             ]);
-    
-            $data = User::findOrFail($id);
-    
-            $updateData = [
-                'name'      => $validated['name'],
-                'username'  => $validated['username'],
-                'email'     => $validated['email'],
-                'departement_id' => $validated['departement_id'] ?? null,
-            ];
-    
-            if (!empty($validated['password'])) {
-                $updateData['password'] = Hash::make($validated['password']);
-            }
-    
-            $data->update($updateData);
-    
-    
-            if ($request->filled('role')) {
-                $data->syncRoles($request->role);
-            }
-    
+
+            $data = Ceiling::where('uuid', $id)->firstOrFail();
+            $data->update($validated);
+
             return response()->json([
                 'status' => 'success',
                 'msg'    => 'Berhasil Update Data'
@@ -208,15 +168,16 @@ class UserController extends Controller
                 'err'    => $th->getMessage()
             ], 400);
         }
+    
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         try {
-            $data = User::where('id', decrypt($id))->firstOrFail();
+            $data = Ceiling::where('uuid', $id)->firstOrFail();
             $data->delete();
     
             return response()->json([

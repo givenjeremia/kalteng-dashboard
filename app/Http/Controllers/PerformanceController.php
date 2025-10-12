@@ -13,21 +13,63 @@ class PerformanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $user = Auth::user();
-            $file_categories = FileCategory::all();
-            $performance     = Performance::with('media')->where('departement_id', $user->departement_id)->first();
-            if ($user->hasRole('Super Admin')) {
-                $departements    = Departement::all();
-                $file_categories = FileCategory::all();
-                $performances    = Performance::with('media')->get();
-                return view('pages.performance.index_admin',compact('file_categories','performances','departements'));
+            if (request()->ajax()){
+                return $this->getData($request);
             }
-            return view('pages.performance.index',compact('file_categories','performance'));
+            return view('pages.performance.index');
         } catch (\Throwable $th) {
             dd($th);
+        }
+    }
+
+    public function getData(Request $request)
+    {
+        try {
+            // Ambil Get
+            $tahun = $request->input('tahun');
+            $bulan = $request->input('bulan');
+            // Render Dari sini
+            $page = 'pages.performance.data.';
+            $user = Auth::user();
+            $file_categories = FileCategory::all();
+            if ($user->hasRole('Super Admin')) {
+                $departements    = Departement::all();
+                $performances = Performance::with('media')
+                ->when($tahun, function ($q) use ($tahun) {
+                    $q->whereYear('created_at', $tahun);
+                })
+                ->when($bulan, function ($q) use ($bulan) {
+                    $q->whereMonth('created_at', $bulan);
+                })
+                ->get();
+                $page .= 'admin';
+                $context = compact('file_categories','performances','departements','tahun','bulan');
+            }
+            else{
+                $performance = Performance::with('media')
+                ->where('departement_id', $user->departement_id)
+                ->when($tahun, function ($q) use ($tahun) {
+                    $q->whereYear('created_at', $tahun);
+                })
+                ->when($bulan, function ($q) use ($bulan) {
+                    $q->whereMonth('created_at', $bulan);
+                })
+                ->first();
+                $page .= 'departement';
+                $context = compact('file_categories','performance','tahun','bulan');
+            }
+            return response()->json([
+                'status' => 'success',
+                'msg'    => view($page,$context)->render()
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Menampilkan Data'
+            ], 500);
         }
     }
 

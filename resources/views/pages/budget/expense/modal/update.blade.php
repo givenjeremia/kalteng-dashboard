@@ -19,11 +19,57 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="fv-row mt-3">
-                        <label for="required" class="required fs-6 fw-semibold mb-2">Nama</label>
-                        <input type="text" class="form-control" name="title" value="{{ $data->title }}" placeholder="Tuliskan Nama Departements">
+                        <label for="required" class="fs-6 fw-semibold mb-2">Departement</label>
+                        <select name="departement_id" class="form-control form-select">
+                            <option value="">Pilih Departements</option>
+
+                            @foreach ($departements as $item)
+                                <option value="{{ $item->pkid }}" {{ $data->departement_id == $item->pkid ? 'selected' : '' }}>{{ $item->title }}</option>
+                                
+                            @endforeach
+                        </select>
                     </div>
-                
+                    
+                    
+                    <div class="fv-row mt-3">
+                        <label for="required" class="fs-6 fw-semibold mb-2">Ceiling</label>
+                        <select name="ceiling_id" class="form-control form-select">
+                            <option value="">Pilih Ceilings</option>
+
+                            @foreach ($ceilings as $item)
+                                <option value="{{ $item->pkid }}"  {{ $data->ceiling_id == $item->pkid ? 'selected' : '' }}>{{ $item->nominal }} - {{ $item->departement->title }}</option>
+                                
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Month</label>
+                        <input type="number" class="form-control" name="bulan" value="{{ $data->bulan }}" placeholder="Tuliskan Bulan">
+                    </div>
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Year</label>
+                        <input type="number" class="form-control" name="tahun" value="{{ $data->tahun }}" placeholder="Tuliskan Tahun">
+                    </div>
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Realization Of Employee</label>
+                        <input type="number" class="form-control" name="realisasi_pegawai" value="{{ $data->realisasi_pegawai }}" placeholder="Tuliskan Nominal">
+                    </div>
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Realization Of Goods</label>
+                        <input type="number" class="form-control" name="realisasi_barang" value="{{ $data->realisasi_barang }}" placeholder="Tuliskan Nominal">
+                    </div>
+
+                    <div class="fv-row mt-3">
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Realization Of Capital</label>
+                        <input type="number" class="form-control" name="realisasi_modal" value="{{ $data->realisasi_modal }}" placeholder="Tuliskan Nominal">
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-kt-modal-action-type="close" data-bs-dismiss="modal" class="btn btn-light-dark fw-bold me-5 w-150px">
@@ -57,7 +103,7 @@
             , cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                let act = "{{ route('departements.update',':id') }}".replace(':id','{{ $data->uuid }}')
+                let act = "{{ route('expenses.update',':id') }}".replace(':id','{{ $data->uuid }}')
                 let form_data = new FormData(document.querySelector("#update_form"));
                 form_data.append('_token', '{{ csrf_token() }}')
                 $.ajax({
