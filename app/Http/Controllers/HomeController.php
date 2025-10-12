@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Budget;
 use App\Models\Ceiling;
-use App\Models\IkpaScore;
+use App\Models\IKPAScore;
 use App\Models\EPerformance;
 use App\Models\Emonev;
 
@@ -277,7 +277,7 @@ public function dataDashboard(Request $request)
         // ============================
         // 🔹 IKPA
         // ============================
-        $ikpaData = IkpaScore::where('tahun', $tahun)
+        $ikpaData = IKPAScore::where('tahun', $tahun)
             ->where('bulan', '<=', $bulan)
             ->get();
 
