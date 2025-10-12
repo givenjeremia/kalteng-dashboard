@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(NewBudgetSeeder::class);
         $this->call(IKPASeeder::class);
         $this->call(EPerformanceSeeder::class);
-        $this->call(EMonevSeeder::class);
+        $this->call(EmonevSeeder::class);
 
         
 
