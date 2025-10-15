@@ -1,5 +1,5 @@
 <div id="kt_app_sidebar" class="app-sidebar flex-column " data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
-    <div class="app-sidebar-logo px-6 border border-0 flex-column-auto" id="kt_app_sidebar_logo" style="background: #2F318B;">
+    <div class="app-sidebar-logo px-6 border-bottom-1 flex-column-auto bg-biru-tua " id="kt_app_sidebar_logo">
         <a href="#">
             <div class="h-25px app-sidebar-logo-default">
                 <div class="row align-items-center">
@@ -37,17 +37,17 @@
         </div>
     </div>
 
-    <div class="app-sidebar-menu overflow-hidden flex-column-fluid">
+    <div class="app-sidebar-menu overflow-hidden flex-column-fluid bg-biru-tua">
         <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5"
             data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto"
             data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
             data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
             <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
                 data-kt-menu="true" data-kt-menu-expand="false">
-                <div class="menu-item">
+                <div class="menu-item ">
                     <a class="menu-link {{ request()->routeIs('home') ? 'active' : '' }}"
                         href="{{ route('home') }}">
-                        <span class="menu-icon">
+                        <span class="menu-icon ">
                             <i class="ki-duotone ki-element-11 fs-2">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
@@ -55,7 +55,7 @@
                                 <span class="path4"></span>
                             </i>
                         </span>
-                        <span class="menu-title">Dashboard</span>
+                        <span class="menu-title fw-bolder fs-5">Dashboard</span>
                     </a>
                 </div>
 
@@ -70,7 +70,7 @@
                                 <span class="path4"></span>
                             </i>
                         </span>
-                        <span class="menu-title">Performance</span>
+                        <span class="menu-title fw-bolder fs-5">Performance</span>
                     </a>
                 </div>
 
@@ -84,14 +84,14 @@
                                 <span class="path3"></span>
                             </i>
                         </span>
-                        <span class="menu-title">Budgets</span>
+                        <span class="menu-title fw-bolder fs-5">Budgets</span>
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('ceilings.index') ? 'active' : '' }}"
                                 href="{{ route('ceilings.index') }}">
-                                <span class="menu-title">
+                                <span class="menu-title fw-bolder fs-5">
                                     Ceiling
                                 </span>
                             </a>
@@ -100,7 +100,7 @@
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('expenses.index') ? 'active' : '' }}"
                                 href="{{ route('expenses.index') }}">
-                                <span class="menu-title">
+                                <span class="menu-title fw-bolder fs-5">
                                     Expense
                                 </span>
                             </a>
@@ -109,7 +109,7 @@
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('e-monev.index') ? 'active' : '' }}"
                                 href="{{ route('e-monev.index') }}">
-                                <span class="menu-title">
+                                <span class="menu-title fw-bolder fs-5">
                                     E-Monev
                                 </span>
                             </a>
@@ -118,7 +118,7 @@
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('e-performance.index') ? 'active' : '' }}"
                                 href="{{ route('e-performance.index') }}">
-                                <span class="menu-title">
+                                <span class="menu-title fw-bolder fs-5">
                                     E-Performance
                                 </span>
                             </a>
@@ -127,7 +127,7 @@
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('ikpa-score.index') ? 'active' : '' }}"
                                 href="{{ route('ikpa-score.index') }}">
-                                <span class="menu-title">
+                                <span class="menu-title fw-bolder fs-5">
                                     IKPA Score
                                 </span>
                             </a>
@@ -147,7 +147,7 @@
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">File Categories</span>
+                            <span class="menu-title fw-bolder fs-5">File Categories</span>
                         </a>
                     </div>
 
@@ -162,7 +162,7 @@
                                     <span class="path3"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Departement</span>
+                            <span class="menu-title fw-bolder fs-5">Departement</span>
                         </a>
                     </div>
 
@@ -176,7 +176,7 @@
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Users</span>
+                            <span class="menu-title fw-bolder fs-5">Users</span>
                         </a>
                     </div>
                 @endif

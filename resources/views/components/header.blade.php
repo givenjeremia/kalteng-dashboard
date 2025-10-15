@@ -1,4 +1,4 @@
-<div id="kt_app_header" class="app-header border border-0 bg-white">
+<div id="kt_app_header" class="app-header m-0 border border-0 bg-white rounded-top-5">
     <div class="app-container container-fluid d-flex align-items-stretch justify-content-between"
         id="kt_app_header_container">
         <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="Show sidebar menu">
