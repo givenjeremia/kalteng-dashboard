@@ -75,6 +75,12 @@
                     title: 'Type Data',
                     className: 'text-nowrap'
                 },
+                 {
+                    data: 'Tahun',
+                    name: 'Tahun',
+                    title: 'Tahun',
+                    className: 'text-nowrap'
+                },
                 {
                     data: 'Tahun',
                     name: 'Tahun',

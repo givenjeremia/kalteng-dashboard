@@ -88,7 +88,6 @@ class CeilingController extends Controller
         try {
             $validated = $request->validate([
                 'departement_id' => 'required',
-                'bulan' => 'required',
                 'tahun' => 'required',
                 'nominal' => 'required',
             ]);
@@ -148,7 +147,6 @@ class CeilingController extends Controller
         try {
             $validated = $request->validate([
                 'departement_id' => 'required',
-                'bulan' => 'required',
                 'tahun' => 'required',
                 'nominal' => 'required',
             ]);
