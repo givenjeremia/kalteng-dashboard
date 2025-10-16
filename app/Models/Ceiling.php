@@ -23,6 +23,8 @@ class Ceiling extends Model
         static::creating(function ($model) {
             if (empty($model->uuid)) {
                 $model->uuid = (string) Str::uuid();
+                $model->bulan = 0;
+
             }
         });
     }
