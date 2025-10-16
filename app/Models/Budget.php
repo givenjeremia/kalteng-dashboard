@@ -15,6 +15,7 @@ class Budget extends Model
     protected $keyType = 'int';
     protected $fillable = [
         'departement_id',
+        'ceiling_id',
         'pagu_pegawai',
         'realisasi_pegawai',
         'pagu_barang',

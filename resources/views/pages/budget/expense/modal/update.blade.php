@@ -39,7 +39,7 @@
                             <option value="">Pilih Ceilings</option>
 
                             @foreach ($ceilings as $item)
-                                <option value="{{ $item->pkid }}"  {{ $data->ceiling_id == $item->pkid ? 'selected' : '' }}>{{ $item->nominal }} - {{ $item->departement->title }}</option>
+                                <option value="{{ $item->pkid }}"  {{ $data->ceiling_id == $item->pkid ? 'selected' : '' }}>Rp. {{ number_format($item->nominal , 0, ',', '.')  }} - {{ $item->departement->title }} - {{ $item->tahun }} - {{ $item->type_data }}</option>
                                 
                             @endforeach
                         </select>

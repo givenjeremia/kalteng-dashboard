@@ -90,6 +90,8 @@ class CeilingController extends Controller
                 'departement_id' => 'required',
                 'tahun' => 'required',
                 'nominal' => 'required',
+                'type_data' => 'required',
+
             ]);
     
             Ceiling::create($validated);
@@ -149,6 +151,7 @@ class CeilingController extends Controller
                 'departement_id' => 'required',
                 'tahun' => 'required',
                 'nominal' => 'required',
+                'type_data' => 'required',
             ]);
 
             $data = Ceiling::where('uuid', $id)->firstOrFail();
