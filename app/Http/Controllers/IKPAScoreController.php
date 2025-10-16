@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departement;
 use App\Models\IKPAScore;
 use Illuminate\Http\Request;
 
@@ -109,7 +110,12 @@ class IKPAScoreController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            $departements = Departement::all();
+            return response()->json(array('status' => 'success','msg' =>  view('pages.budget.ikpa.modal.create',compact('departements'))->render()), 200);
+        } catch (\Throwable $e) {
+            return response()->json(array('status' => 'error','msg' => 'Gagal Menampilkan Form Tambah','err'=>$e->getMessage()), 200);
+        }
     }
 
     /**
@@ -117,7 +123,27 @@ class IKPAScoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'departement_id' => 'required',
+            'tahun' => 'required',
+            'bulan' => 'required',
+            'deviation_dipa' => 'required',
+            'revisi_dipa' => 'required',
+            'penyerapan_anggaran'=> 'required',
+            'capaian_output'=> 'required',
+            'penyelesaian_tagihan'=> 'required',
+            'pengelolaan_up_tup'=> 'required',
+            'belanja_kontraktual'=> 'required',
+            'nilai_ikpa'=> 'required',
+            
+        ]);
+
+        IKPAScore::create($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'msg'    => 'Berhasil Tambah Data'
+        ], 200);
     }
 
     /**
@@ -131,24 +157,84 @@ class IKPAScoreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(IKPAScore $iKPAScore)
+    public function edit(string $id)
     {
-        //
+        try {
+            $departements = Departement::all();
+            $data = IKPAScore::where('uuid',$id)->firstOrFail();
+        
+            return response()->json([
+                'status' => 'success',
+                'msg'    => view('pages.budget.ikpa.modal.update', compact('data','departements'))->render()
+            ], 200);
+        
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Menampilkan Form Edit',
+                'err'    => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, IKPAScore $iKPAScore)
+    public function update(Request $request,  string $id)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'departement_id' => 'required',
+                'tahun' => 'required',
+                'bulan' => 'required',
+                'deviation_dipa' => 'required',
+                'revisi_dipa' => 'required',
+                'penyerapan_anggaran'=> 'required',
+                'capaian_output'=> 'required',
+                'penyelesaian_tagihan'=> 'required',
+                'pengelolaan_up_tup'=> 'required',
+                'belanja_kontraktual'=> 'required',
+                'nilai_ikpa'=> 'required',
+            
+            ]);
+
+            $data = IKPAScore::where('uuid', $id)->firstOrFail();
+            $data->update($validated);
+
+            return response()->json([
+                'status' => 'success',
+                'msg'    => 'Berhasil Update Data'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Update Data',
+                'err'    => $th->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(IKPAScore $iKPAScore)
+    public function destroy(string $id)
     {
-        //
+        try {
+            $data = IKPAScore::where('uuid', $id)->firstOrFail();
+            $data->delete();
+    
+            return response()->json([
+                'status' => 'success',
+                'msg'    => 'Berhasil Hapus Data'
+            ], 200);
+    
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Hapus Data',
+                'err'    => $th->getMessage()
+            ], 400);
+        }
     }
 }

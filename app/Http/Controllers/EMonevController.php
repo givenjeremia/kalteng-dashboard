@@ -41,7 +41,6 @@ class EMonevController extends Controller
                         : '-';
                 })
                 ->addColumn('Bulan', function ($item) {
-                    // Format bulan dengan nama
                     $namaBulan = date("F", mktime(0, 0, 0, $item->bulan, 1));
                     return '<span class="text-gray-800 fs-5 fw-bold mb-1">' . $namaBulan . '</span>';
                 })
@@ -51,14 +50,6 @@ class EMonevController extends Controller
                 ->addColumn('Anggaran', function ($item) {
                     $formatted = number_format($item->anggaran, 2, ',', '.');
                     return '<span class="text-gray-800 fs-5 fw-bold mb-1">Rp ' . $formatted . '</span>';
-                })
-                ->addColumn('Fisik', function ($item) {
-                    $formatted = number_format($item->fisik, 2, ',', '.');
-                    return '<span class="text-gray-800 fs-5 fw-bold mb-1">' . $formatted . '</span>';
-                })
-                ->addColumn('GAP', function ($item) {
-                    $formatted = number_format($item->gap, 2, ',', '.');
-                    return '<span class="text-gray-800 fs-5 fw-bold mb-1">' . $formatted . '</span>';
                 })
                 ->addColumn('Kinerja', function ($item) {
                     $formatted = number_format($item->kinerja_satker, 2, ',', '.');
@@ -80,7 +71,7 @@ class EMonevController extends Controller
                         </button>
                     ';
                 })
-                ->rawColumns(['No', 'Departement', 'Bulan', 'Tahun', 'Anggaran', 'Fisik', 'GAP', 'Kinerja', 'Keterangan', 'Action'])
+                ->rawColumns(['No', 'Departement', 'Bulan', 'Tahun', 'Anggaran', 'Kinerja', 'Keterangan', 'Action'])
                 ->make(true);
         }
     }
@@ -92,7 +83,12 @@ class EMonevController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            $departements = Departement::all();
+            return response()->json(array('status' => 'success','msg' =>  view('pages.budget.e-monev.modal.create',compact('departements'))->render()), 200);
+        } catch (\Throwable $e) {
+            return response()->json(array('status' => 'error','msg' => 'Gagal Menampilkan Form Tambah','err'=>$e->getMessage()), 200);
+        }
     }
 
     /**
@@ -100,38 +96,115 @@ class EMonevController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'departement_id' => 'required',
+                'tahun' => 'required',
+                'bulan' => 'required',
+                'anggaran' => 'required',
+                'kinerja_satker' => 'required',
+                'keterangan' => 'required',
+            ]);
+    
+            Emonev::create($validated);
+    
+            return response()->json([
+                'status' => 'success',
+                'msg'    => 'Berhasil Tambah Data'
+            ], 200);
+    
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Tambah Data',
+                'err'    => $th->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Emonev $emonev)
+    public function show(string $id)
     {
-        //
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Emonev $emonev)
+    public function edit(string $id)
     {
-        //
+        try {
+            $data = Emonev::where('uuid',$id)->firstOrFail();
+            $departements = Departement::all();
+        
+            return response()->json([
+                'status' => 'success',
+                'msg'    => view('pages.budget.e-monev.modal.update', compact('data','departements'))->render()
+            ], 200);
+        
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Menampilkan Form Edit',
+                'err'    => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Emonev $emonev)
+    public function update(Request $request, string $id)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'departement_id' => 'required',
+                'tahun' => 'required',
+                'bulan' => 'required',
+                'anggaran' => 'required',
+                'kinerja_satker' => 'required',
+                'keterangan' => 'required',
+            ]);
+
+            $data = Emonev::where('uuid', $id)->firstOrFail();
+            $data->update($validated);
+
+            return response()->json([
+                'status' => 'success',
+                'msg'    => 'Berhasil Update Data'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Update Data',
+                'err'    => $th->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Emonev $emonev)
+    public function destroy(string $id)
     {
-        //
+        try {
+            $data = Emonev::where('uuid', $id)->firstOrFail();
+            $data->delete();
+    
+            return response()->json([
+                'status' => 'success',
+                'msg'    => 'Berhasil Hapus Data'
+            ], 200);
+    
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Gagal Hapus Data',
+                'err'    => $th->getMessage()
+            ], 400);
+        }
     }
 }

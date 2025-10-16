@@ -15,15 +15,16 @@ return new class extends Migration
             $table->bigIncrements('pkid');
             $table->uuid('uuid')->unique();
 
-            $table->foreignId('departement_id')->nullable()->constrained('departements', 'pkid');
+            $table->foreignId('departement_id')->nullable()->constrained('departements', 'pkid'); // Tidak Pake
 
-            $table->integer('tahun')->default(date('Y'));
-            $table->integer('bulan')->default(1);
+            $table->integer('tahun')->default(date('Y')); // Tidak Pake
+            $table->integer('bulan')->default(1); // Tidak Pake
 
-            $table->decimal('target', 6, 2)->default(0);
-            $table->decimal('tercapai', 6, 2)->default(0);
+            $table->decimal('target', 6, 2)->default(0); // Pake
+            $table->decimal('tercapai', 6, 2)->default(0); // Pake
+            $table->decimal('persentase_capaian', 6, 2)->default(0); // Pake
+
             $table->decimal('tidak_tercapai', 6, 2)->default(0);
-            $table->decimal('persentase_capaian', 6, 2)->default(0);
 
             $table->timestamps();
             $table->softDeletes();

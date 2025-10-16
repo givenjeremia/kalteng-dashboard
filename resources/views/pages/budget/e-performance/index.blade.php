@@ -49,13 +49,12 @@
             ajax: "{{ route('e-performance.index') }}",
             columns: [
                 { data: 'No', name: 'No', title: 'No', className: 'px-5 text-nowrap' },
-                { data: 'Departement', name: 'Departement', title: 'Departement', className: 'text-nowrap' },
-                { data: 'Bulan', name: 'Bulan', title: 'Bulan', className: 'text-nowrap' },
-                { data: 'Tahun', name: 'Tahun', title: 'Tahun', className: 'text-nowrap' },
+                { data: 'Sasaran', name: 'Sasaran', title: 'Sasaran', className: 'text-nowrap' },
+                { data: 'Indikator', name: 'Indikator', title: 'Indikator', className: 'text-nowrap' },
                 { data: 'Target', name: 'Target', title: 'Target', className: 'text-nowrap' },
                 { data: 'Tercapai', name: 'Tercapai', title: 'Tercapai', className: 'text-nowrap' },
-                { data: 'Tidak Tercapai', name: 'Tidak Tercapai', title: 'Tidak Tercapai', className: 'text-nowrap' },
                 { data: 'Persentase Capaian', name: 'Persentase Capaian', title: 'Persentase Capaian', className: 'text-nowrap' },
+                { data: 'Satuan', name: 'Satuan', title: 'Satuan', className: 'text-nowrap' },
                 { data: 'Action', name: 'Action', title: 'Action', className: 'px-5 text-nowrap' }
             ]
         });
