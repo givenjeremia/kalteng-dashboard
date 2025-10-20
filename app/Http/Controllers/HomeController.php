@@ -195,9 +195,7 @@ public function dataDashboard(Request $request)
         $tahun = $request->get('tahun', date('Y'));
         $bulan = $request->get('bulan', date('n'));
 
-        // ============================
-        // 🔹 AMBIL DATA BUDGET
-        // ============================
+
         $budgets = Budget::where('tahun', $tahun)
                         ->where('bulan', '<=', $bulan)
                         ->with(['departement', 'ceiling'])
@@ -210,27 +208,25 @@ public function dataDashboard(Request $request)
             ], 404);
         }
 
-        // 🔹 Total pagu per type_data
+
         $ceilings = Ceiling::where('tahun', $tahun)->get();
         $pegawaiTotal = $ceilings->where('type_data', 'pegawai')->sum('nominal');
         $barangTotal  = $ceilings->where('type_data', 'barang')->sum('nominal');
         $modalTotal   = $ceilings->where('type_data', 'modal')->sum('nominal');
         $totalPagu    = $pegawaiTotal + $barangTotal + $modalTotal;
 
-        // 🔹 Total realisasi
-        $pegawaiRealisasi = $budgets->sum('realisasi_pegawai');
-        $barangRealisasi  = $budgets->sum('realisasi_barang');
-        $modalRealisasi   = $budgets->sum('realisasi_modal');
+
+        $pegawaiRealisasi = $budgets->where('ceiling.type_data', 'pegawai')->sum('realisasi_pegawai');
+        $barangRealisasi  = $budgets->where('ceiling.type_data', 'barang')->sum('realisasi_barang');
+        $modalRealisasi   = $budgets->where('ceiling.type_data', 'modal')->sum('realisasi_modal');
         $totalRealisasi   = $pegawaiRealisasi + $barangRealisasi + $modalRealisasi;
 
-        // 🔹 Persentase total realisasi
+
         $persentase = $totalPagu > 0
             ? round(($totalRealisasi / $totalPagu) * 100, 2)
             : 0;
 
-        // ============================
-        // 🔹 DATA BULANAN
-        // ============================
+
         $monthlyData = [];
         $monthlyPagu = [];
         $monthlyRealisasi = [];
@@ -249,9 +245,7 @@ public function dataDashboard(Request $request)
             $categories[]       = date("M", mktime(0, 0, 0, $m, 1));
         }
 
-        // ============================
-        // 🔹 TRI WULAN & TAHUNAN
-        // ============================
+   
         $currentQuarter  = ceil($bulan / 3);
         $quarterStartMonth = ($currentQuarter - 1) * 3 + 1;
         $quarterEndMonth   = $currentQuarter * 3;
@@ -274,15 +268,11 @@ public function dataDashboard(Request $request)
             ? round(($yearRealisasi / $totalPagu) * 100, 2)
             : 0;
 
-        // ============================
-        // 🔹 IKPA
-        // ============================
         $ikpaData = IKPAScore::where('tahun', $tahun)
             ->where('bulan', '<=', $bulan)
             ->get();
 
-        // dd($ikpaData);
-
+    
         $ikpaRataRata = $ikpaData->avg('nilai_ikpa') ?? 0;
         $ikpaKeterangan = match (true) {
             $ikpaRataRata >= 95 => 'Sangat Baik',
@@ -291,17 +281,13 @@ public function dataDashboard(Request $request)
             default => 'Kurang',
         };
 
-        // ============================
-        // 🔹 E-PERFORMANCE
-        // ============================
+
         $eperformanceData = EPerformance::where('tahun', $tahun)
             ->where('bulan', '<=', $bulan)
             ->get();
         $eperformanceCapaian = $eperformanceData->avg('persentase_capaian') ?? 0;
 
-        // ============================
-        // 🔹 E-MONEV (MODEL: Emonev)
-        // ============================
+   
         $emonevData = Emonev::where('tahun', $tahun)
             ->where('bulan', '<=', $bulan)
             ->get();
@@ -311,9 +297,6 @@ public function dataDashboard(Request $request)
         $emonevFisik    = $emonevData->isNotEmpty() ? $emonevData->avg('fisik') : 0;
         $emonevGAP      = $emonevData->isNotEmpty() ? $emonevData->avg('gap') : 0;
 
-        // ============================
-        // 🔹 RENDER VIEW
-        // ============================
         $html = view('pages.home.components.data', [
             'budgets'         => $budgets,
             'totalPagu'       => $totalPagu,
@@ -333,9 +316,6 @@ public function dataDashboard(Request $request)
             'emonevGAP'        => round($emonevGAP, 2),
         ])->render();
 
-        // ============================
-        // 🔹 RESPONSE JSON
-        // ============================
         return response()->json([
             'status' => 'success',
             'html'   => $html,
