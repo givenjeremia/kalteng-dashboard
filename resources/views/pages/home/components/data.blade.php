@@ -152,7 +152,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <span class="fw-semibold text-gray-600">Anggaran</span>
-                    <span class="fw-bold">{{ $emonevAnggaran }}</span>
+                    <span class="fw-bold">Rp{{ number_format($emonevAnggaran, 0, ',', '.') }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span class="fw-semibold text-gray-600">Keterangan</span>
