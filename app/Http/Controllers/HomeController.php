@@ -280,13 +280,45 @@ public function dataDashboard(Request $request)
             ? round(($quarterRealisasi / $totalPagu) * 100, 2)
             : 0;
 
-        $yearBudget = Budget::where('tahun', $tahun)->get();
-        $yearRealisasi = $yearBudget->sum('realisasi_pegawai')
-                        + $yearBudget->sum('realisasi_barang')
-                        + $yearBudget->sum('realisasi_modal');
+        // $yearBudget = Budget::where('tahun', $tahun)->get();
 
+        // $yearRealisasi = $yearBudget->sum('realisasi_pegawai')
+        //                 + $yearBudget->sum('realisasi_barang')
+        //                 + $yearBudget->sum('realisasi_modal');
+
+        // $tahunanPercent = $totalPagu > 0
+        //     ? round(($yearRealisasi / $totalPagu) * 100, 2)
+        //     : 0;
+
+        $yearBudget = Budget::where('tahun', $tahun)
+            ->where('bulan', '<=', $bulan) // ambil sampai bulan berjalan
+            ->with(['ceiling'])
+            ->get();
+
+        // Ambil hanya data terakhir per departemen + ceiling
+        $lastYearBudgets = $yearBudget
+            ->sortByDesc('bulan')
+            ->unique(fn($b) => $b->departement_id . '-' . $b->ceiling_id);
+
+        // Hitung total realisasi terakhir per kategori
+        $pegawaiRealisasiLast = $lastYearBudgets
+            ->filter(fn($b) => optional($b->ceiling)->type_data === 'pegawai')
+            ->sum('realisasi_pegawai');
+
+        $barangRealisasiLast = $lastYearBudgets
+            ->filter(fn($b) => optional($b->ceiling)->type_data === 'barang')
+            ->sum('realisasi_barang');
+
+        $modalRealisasiLast = $lastYearBudgets
+            ->filter(fn($b) => optional($b->ceiling)->type_data === 'modal')
+            ->sum('realisasi_modal');
+
+        // Total semua kategori
+        $yearRealisasiLast = $pegawaiRealisasiLast + $barangRealisasiLast + $modalRealisasiLast;
+
+        // Hitung persen dari total pagu
         $tahunanPercent = $totalPagu > 0
-            ? round(($yearRealisasi / $totalPagu) * 100, 2)
+            ? round(($yearRealisasiLast / $totalPagu) * 100, 2)
             : 0;
 
         $ikpaData = IKPAScore::where('tahun', $tahun)
