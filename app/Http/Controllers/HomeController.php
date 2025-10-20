@@ -225,7 +225,7 @@ public function dataDashboard(Request $request)
         $modalRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'modal')
             ->sum('realisasi_modal');
         
-        dd($pegawaiRealisasi);
+        // dd($pegawaiRealisasi);
         $totalRealisasi   = $pegawaiRealisasi + $barangRealisasi + $modalRealisasi;
 
 
