@@ -216,14 +216,28 @@ public function dataDashboard(Request $request)
         $totalPagu    = $pegawaiTotal + $barangTotal + $modalTotal;
 
 
-        $pegawaiRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'pegawai')
-        ->sum('realisasi_pegawai');
+        // $pegawaiRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'pegawai')
+        // ->sum('realisasi_pegawai');
     
-        $barangRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'barang')
-            ->sum('realisasi_barang');
+        // $barangRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'barang')
+        //     ->sum('realisasi_barang');
         
-        $modalRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'modal')
-            ->sum('realisasi_modal');
+        // $modalRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'modal')
+        //     ->sum('realisasi_modal');
+
+        // Ambil hanya record terakhir per departement_id + ceiling_id
+        $lastBudgets = $budgets
+        ->sortByDesc('bulan') 
+        ->unique(fn($b) => $b->departement_id . '-' . $b->ceiling_id); 
+
+        $pegawaiRealisasi = $lastBudgets->filter(fn($b) => optional($b->ceiling)->type_data === 'pegawai')
+        ->sum('realisasi_pegawai');
+
+        $barangRealisasi = $lastBudgets->filter(fn($b) => optional($b->ceiling)->type_data === 'barang')
+        ->sum('realisasi_barang');
+
+        $modalRealisasi = $lastBudgets->filter(fn($b) => optional($b->ceiling)->type_data === 'modal')
+        ->sum('realisasi_modal');
         
         // dd($pegawaiRealisasi);
         $totalRealisasi   = $pegawaiRealisasi + $barangRealisasi + $modalRealisasi;
