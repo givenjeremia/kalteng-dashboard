@@ -216,9 +216,14 @@ public function dataDashboard(Request $request)
         $totalPagu    = $pegawaiTotal + $barangTotal + $modalTotal;
 
 
-        $pegawaiRealisasi = $budgets->sum('realisasi_pegawai');
-        $barangRealisasi  = $budgets->sum('realisasi_barang');
-        $modalRealisasi   = $budgets->sum('realisasi_modal');
+        $pegawaiRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'pegawai')
+        ->sum('realisasi_pegawai');
+    
+        $barangRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'barang')
+            ->sum('realisasi_barang');
+        
+        $modalRealisasi = $budgets->filter(fn($b) => optional($b->ceiling)->type_data === 'modal')
+            ->sum('realisasi_modal');
         $totalRealisasi   = $pegawaiRealisasi + $barangRealisasi + $modalRealisasi;
 
 
