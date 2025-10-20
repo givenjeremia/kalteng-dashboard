@@ -350,12 +350,65 @@ public function dataDashboard(Request $request)
         $emonevFisik    = $emonevData->isNotEmpty() ? $emonevData->avg('fisik') : 0;
         $emonevGAP      = $emonevData->isNotEmpty() ? $emonevData->avg('gap') : 0;
 
+
+        // New Triwulan Data
+        $triwulanList = [
+            1 => [1, 3],   // TW1: Jan–Mar
+            2 => [4, 6],   // TW2: Apr–Jun
+            3 => [7, 9],   // TW3: Jul–Sep
+            4 => [10, 12], // TW4: Okt–Des
+        ];
+        
+        $triwulanData = collect();
+        
+        foreach ($triwulanList as $tw => [$start, $end]) {
+            $quarterBudget = $budgets->filter(fn($b) =>
+                $b->bulan >= $start && $b->bulan <= $end
+            );
+        
+            // Ambil hanya data terakhir per departemen+ceiling di triwulan ini
+            $lastQuarterBudgets = $quarterBudget
+                ->sortByDesc('bulan')
+                ->unique(fn($b) => $b->departement_id . '-' . $b->ceiling_id);
+        
+            // Hitung total realisasi terakhir per triwulan
+            $pegawai = $lastQuarterBudgets
+                ->filter(fn($b) => optional($b->ceiling)->type_data === 'pegawai')
+                ->sum('realisasi_pegawai');
+        
+            $barang = $lastQuarterBudgets
+                ->filter(fn($b) => optional($b->ceiling)->type_data === 'barang')
+                ->sum('realisasi_barang');
+        
+            $modal = $lastQuarterBudgets
+                ->filter(fn($b) => optional($b->ceiling)->type_data === 'modal')
+                ->sum('realisasi_modal');
+        
+            $total = $pegawai + $barang + $modal;
+        
+            $percent = $totalPagu > 0
+                ? round(($total / $totalPagu) * 100, 2)
+                : 0;
+        
+            $triwulanData->push([
+                'kode' => "TW$tw",
+                'periode' => "Bulan $start-$end",
+                'pegawai' => $pegawai,
+                'barang' => $barang,
+                'modal' => $modal,
+                'total' => $total,
+                'persentase' => $percent,
+            ]);
+        }
+        // dd($triwulanData);
+
         $html = view('pages.home.components.data', [
             'budgets'         => $budgets,
             'totalPagu'       => $totalPagu,
             'totalRealisasi'  => $totalRealisasi,
             'persentase'      => $persentase,
             'triwulanPercent' => $triwulanPercent,
+            'triwulan_summary' => $triwulanData,
             'tahunanPercent'  => $tahunanPercent,
             'tahun'           => $tahun,
             'bulan'           => $bulan,
