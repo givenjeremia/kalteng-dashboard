@@ -53,7 +53,7 @@
                 { data: 'Bulan', name: 'Bulan', title: 'Bulan', className: 'text-nowrap' },
                 { data: 'Tahun', name: 'Tahun', title: 'Tahun', className: 'text-nowrap' },
                 { data: 'Anggaran', name: 'Anggaran', title: 'Anggaran', className: 'text-nowrap' },
-                { data: 'Kinerja', name: 'Kinerja', title: 'Kinerja Satker', className: 'text-nowrap' },
+                { data: 'Kinerja', name: 'Kinerja', title: 'Status Pelaksanaan', className: 'text-nowrap' },
                 { data: 'Keterangan', name: 'Keterangan', title: 'Keterangan', className: 'text-nowrap' },
                 { data: 'Action', name: 'Action', title: 'Action', className: 'px-5 text-nowrap' }
             ]

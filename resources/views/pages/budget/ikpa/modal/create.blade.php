@@ -43,7 +43,7 @@
 
 
                     <div class="fv-row mt-3">
-                        <label for="required" class="required fs-6 fw-semibold mb-2">Deviation Dipa</label>
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Halaman III DIPA</label>
                         <input type="number" class="form-control" name="deviation_dipa" placeholder="Tuliskan Deviation Dipa">
                     </div>
 

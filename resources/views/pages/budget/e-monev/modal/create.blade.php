@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="fv-row mt-3">
-                        <label for="required" class="required fs-6 fw-semibold mb-2">Kinerja Satker</label>
+                        <label for="required" class="required fs-6 fw-semibold mb-2">Status Pelaksanaan</label>
                         <input type="number" class="form-control" name="kinerja_satker" placeholder="Tuliskan Anggaran">
                     </div>
 

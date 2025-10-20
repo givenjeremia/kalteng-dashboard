@@ -52,7 +52,7 @@
                 { data: 'Departement', name: 'Departement', title: 'Departement', className: 'text-nowrap' },
                 { data: 'Bulan', name: 'Bulan', title: 'Bulan', className: 'text-nowrap' },
                 { data: 'Tahun', name: 'Tahun', title: 'Tahun', className: 'text-nowrap' },
-                { data: 'Deviation DIPA', name: 'Deviation DIPA', title: 'Deviation DIPA (%)', className: 'text-nowrap' },
+                { data: 'Deviation DIPA', name: 'Deviation DIPA', title: 'Halaman III DIPA', className: 'text-nowrap' },
                 { data: 'Revisi DIPA', name: 'Revisi DIPA', title: 'Revisi DIPA (%)', className: 'text-nowrap' },
                 { data: 'Penyerapan Anggaran', name: 'Penyerapan Anggaran', title: 'Penyerapan Anggaran (%)', className: 'text-nowrap' },
                 { data: 'Capaian Output', name: 'Capaian Output', title: 'Capaian Output (%)', className: 'text-nowrap' },

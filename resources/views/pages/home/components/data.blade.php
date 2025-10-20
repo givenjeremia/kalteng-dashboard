@@ -101,7 +101,7 @@
             <h5 class="fw-bold text-center">E-Monev Bappenas</h5>
             <div class="mt-4">
                 <div class="d-flex justify-content-between">
-                    <span class="fw-semibold text-gray-600">Kinerja Satker</span>
+                    <span class="fw-semibold text-gray-600">Status Pelaksanaan</span>
                     <span class="fw-bold">{{ $emonevKinerja }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
