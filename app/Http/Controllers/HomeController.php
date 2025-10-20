@@ -347,8 +347,10 @@ public function dataDashboard(Request $request)
 
         $emonevKinerja  = $emonevData->isNotEmpty() ? $emonevData->avg('kinerja_satker') : 0;
         $emonevAnggaran = $emonevData->isNotEmpty() ? $emonevData->avg('anggaran') : 0;
-        $emonevFisik    = $emonevData->isNotEmpty() ? $emonevData->avg('fisik') : 0;
-        $emonevGAP      = $emonevData->isNotEmpty() ? $emonevData->avg('gap') : 0;
+        $emonevKeterangan = $emonevData->isNotEmpty()
+    ? $emonevData->groupBy('keterangan')->sortByDesc(fn($g) => $g->count())->keys()->first()
+    : '-';
+
 
 
         // New Triwulan Data
@@ -418,8 +420,7 @@ public function dataDashboard(Request $request)
             'eperformanceCapaian' => round($eperformanceCapaian, 2),
             'emonevKinerja'    => round($emonevKinerja, 2),
             'emonevAnggaran'   => round($emonevAnggaran, 2),
-            'emonevFisik'      => round($emonevFisik, 2),
-            'emonevGAP'        => round($emonevGAP, 2),
+            'emonevKeterangan'=> $emonevKeterangan,
         ])->render();
 
         return response()->json([
@@ -450,8 +451,7 @@ public function dataDashboard(Request $request)
             'emonev' => [
                 'kinerja_satker' => round($emonevKinerja, 2),
                 'anggaran' => round($emonevAnggaran, 2),
-                'fisik' => round($emonevFisik, 2),
-                'gap' => round($emonevGAP, 2),
+           
             ],
         ]);
     } catch (\Throwable $e) {

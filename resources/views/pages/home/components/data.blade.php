@@ -155,12 +155,8 @@
                     <span class="fw-bold">{{ $emonevAnggaran }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span class="fw-semibold text-gray-600">Fisik</span>
-                    <span class="fw-bold">{{ $emonevFisik }}</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span class="fw-semibold text-gray-600">GAP</span>
-                    <span class="fw-bold">{{ $emonevGAP }}</span>
+                    <span class="fw-semibold text-gray-600">Keterangan</span>
+                    <span class="fw-bold">{{ $emonevKeterangan}}</span>
                 </div>
             </div>
         </div>
