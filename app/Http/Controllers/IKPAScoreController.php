@@ -26,9 +26,22 @@ class IKPAScoreController extends Controller
     public function tableDataAdmin()
     {
         if (request()->ajax()) {
-            $data = IkpaScore::with('departement')->orderBy('pkid', 'desc')->get();
+            $bulan = request()->get('bulan');
+            $tahun = request()->get('tahun');
+    
+            // Base query
+            $data = IkpaScore::with('departement')
+                ->when($bulan, function ($query, $bulan) {
+                    $query->where('bulan', $bulan);
+                })
+                ->when($tahun, function ($query, $tahun) {
+                    $query->where('tahun', $tahun);
+                })
+                ->orderBy('pkid', 'desc')
+                ->get();
+    
             $counter = 1;
-
+    
             return datatables()->of($data)
                 ->addColumn('No', function () use (&$counter) {
                     return $counter++;
@@ -103,6 +116,7 @@ class IKPAScoreController extends Controller
                 ->make(true);
         }
     }
+    
 
 
     /**
