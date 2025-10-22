@@ -167,83 +167,100 @@
 {{-- Table --}}
 <div class="card card-flush my-3">
     <div class="card-body">
-        <h3>Histori Data Hingga Bulan {{ $bulan }} Pada Tahun {{ $tahun }}</h3>
+        <h3 class="text-lg font-bold mb-4 text-gray-800">
+            Histori Data Hingga Bulan {{ $bulan }} Pada Tahun {{ $tahun }}
+        </h3>
 
-        <table class="table table-hover table-rounded table-striped border gy-7 gs-7" id="budget-table">
-            <thead>
-                <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                    <th>Departemen</th>
-                    <th>Pagu Pegawai</th>
-                    <th>Realisasi Pegawai</th>
-                    <th>%</th>
-                    <th>Pagu Barang</th>
-                    <th>Realisasi Barang</th>
-                    <th>%</th>
-                    <th>Pagu Modal</th>
-                    <th>Realisasi Modal</th>
-                    <th>%</th>
-                    <th>Total Pagu</th>
-                    <th>Total Realisasi</th>
-                    <th>%</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($budgets_primitif as $b)
-                    @php
-                        $pegawai_per = $b->pagu_pegawai > 0 ? round(($b->realisasi_pegawai / $b->pagu_pegawai) * 100, 2) : 0;
-                        $barang_per = $b->pagu_barang > 0 ? round(($b->realisasi_barang / $b->pagu_barang) * 100, 2) : 0;
-                        $modal_per = $b->pagu_modal > 0 ? round(($b->realisasi_modal / $b->pagu_modal) * 100, 2) : 0;
-                        $tp = $b->pagu_pegawai + $b->pagu_barang + $b->pagu_modal;
-                        $tr = $b->realisasi_pegawai + $b->realisasi_barang + $b->realisasi_modal;
-                        $total_per = $tp > 0 ? round(($tr / $tp) * 100, 2) : 0;
-                    @endphp
-                    <tr>
-                        <td>{{ $b->departement?->title ?? '-' }}</td>
-                        <td>{{ number_format($b->pagu_pegawai) }}</td>
-                        <td>{{ number_format($b->realisasi_pegawai) }}</td>
-                        <td>{{ $pegawai_per }}%</td>
-
-                        <td>{{ number_format($b->pagu_barang) }}</td>
-                        <td>{{ number_format($b->realisasi_barang) }}</td>
-                        <td>{{ $barang_per }}%</td>
-
-                        <td>{{ number_format($b->pagu_modal) }}</td>
-                        <td>{{ number_format($b->realisasi_modal) }}</td>
-                        <td>{{ $modal_per }}%</td>
-
-                        <td>{{ number_format($tp) }}</td>
-                        <td>{{ number_format($tr) }}</td>
-                        <td>{{ $total_per }}%</td>
+        <div class="overflow-x-auto border rounded-lg shadow-sm">
+            <table class="min-w-full border-collapse w-100">
+                <thead>
+                    <tr class="bg-biru-tua text-white text-sm text-center uppercase">
+                        <th rowspan="2" class="border border-white py-3 px-2 w-36 align-middle">Satker</th>
+                        <th colspan="3" class="border border-white py-2 px-2">Belanja Pegawai</th>
+                        <th colspan="3" class="border border-white py-2 px-2">Belanja Barang</th>
+                        <th colspan="3" class="border border-white py-2 px-2">Belanja Modal</th>
+                        <th colspan="3" class="border border-white py-2 px-2">Total Belanja</th>
                     </tr>
-                @endforeach
+                    <tr class="bg-biru-tua text-white text-xs">
+                        <th class="border border-white py-1 px-2">Pagu</th>
+                        <th class="border border-white py-1 px-2">Realisasi</th>
+                        <th class="border border-white py-1 px-2">%</th>
 
-                {{-- Baris TOTAL --}}
-                @php
-                    $tp_total = $total_primitif['pagu_pegawai'] + $total_primitif['pagu_barang'] + $total_primitif['pagu_modal'];
-                    $tr_total = $total_primitif['realisasi_pegawai'] + $total_primitif['realisasi_barang'] + $total_primitif['realisasi_modal'];
-                    $total_persen = $tp_total > 0 ? round(($tr_total / $tp_total) * 100, 2) : 0;
-                    // $total = total_primitif;
-                @endphp
-                <tr class="fw-bold text-dark border-top-2 border-gray-300">
-                    <td>TOTAL</td>
-                    <td>{{ number_format($total_primitif['pagu_pegawai']) }}</td>
-                    <td>{{ number_format($total_primitif['realisasi_pegawai']) }}</td>
-                    <td>{{ round(($total_primitif['pagu_pegawai'] > 0 ? $total_primitif['realisasi_pegawai'] / $total_primitif['pagu_pegawai'] * 100 : 0), 2) }}%</td>
+                        <th class="border border-white py-1 px-2">Pagu</th>
+                        <th class="border border-white py-1 px-2">Realisasi</th>
+                        <th class="border border-white py-1 px-2">%</th>
 
-                    <td>{{ number_format($total_primitif['pagu_barang']) }}</td>
-                    <td>{{ number_format($total_primitif['realisasi_barang']) }}</td>
-                    <td>{{ round(($total_primitif['pagu_barang'] > 0 ? $total_primitif['realisasi_barang'] / $total_primitif['pagu_barang'] * 100 : 0), 2) }}%</td>
+                        <th class="border border-white py-1 px-2">Pagu</th>
+                        <th class="border border-white py-1 px-2">Realisasi</th>
+                        <th class="border border-white py-1 px-2">%</th>
 
-                    <td>{{ number_format($total_primitif['pagu_modal']) }}</td>
-                    <td>{{ number_format($total_primitif['realisasi_modal']) }}</td>
-                    <td>{{ round(($total_primitif['pagu_modal'] > 0 ? $total_primitif['realisasi_modal'] /$total_primitif['pagu_modal'] * 100 : 0), 2) }}%</td>
+                        <th class="border border-white py-1 px-2">Pagu</th>
+                        <th class="border border-white py-1 px-2">Realisasi</th>
+                        <th class="border border-white py-1 px-2">%</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm text-center text-gray-800">
+                    @foreach($budgets_primitif as $b)
+                        @php
+                            $pegawai_per = $b->pagu_pegawai > 0 ? round(($b->realisasi_pegawai / $b->pagu_pegawai) * 100, 2) : 0;
+                            $barang_per = $b->pagu_barang > 0 ? round(($b->realisasi_barang / $b->pagu_barang) * 100, 2) : 0;
+                            $modal_per = $b->pagu_modal > 0 ? round(($b->realisasi_modal / $b->pagu_modal) * 100, 2) : 0;
+                            $tp = $b->pagu_pegawai + $b->pagu_barang + $b->pagu_modal;
+                            $tr = $b->realisasi_pegawai + $b->realisasi_barang + $b->realisasi_modal;
+                            $total_per = $tp > 0 ? round(($tr / $tp) * 100, 2) : 0;
+                        @endphp
+                        <tr class="odd:bg-gray-50 even:bg-white hover:bg-blue-50 transition">
+                            <td class="border border-gray-300 py-2 px-2 font-semibold">{{ $b->departement?->title ?? '-' }}</td>
 
-                    <td>{{ number_format($tp_total) }}</td>
-                    <td>{{ number_format($tr_total) }}</td>
-                    <td>{{ $total_persen }}%</td>
-                </tr>
-            </tbody>
-        </table>
+                            {{-- Belanja Pegawai --}}
+                            <td class="border border-gray-300 py-2 px-2">{{ $b->pagu_pegawai ? number_format($b->pagu_pegawai, 0, ',', '.') : '-' }}</td>
+                            <td class="border border-gray-300 py-2 px-2">{{ $b->realisasi_pegawai ? number_format($b->realisasi_pegawai, 0, ',', '.') : '-' }}</td>
+                            <td class="border border-gray-300 py-2 px-2">{{ $pegawai_per ?: '-' }}</td>
+
+                            {{-- Belanja Barang --}}
+                            <td class="border border-gray-300 py-2 px-2">{{ $b->pagu_barang ? number_format($b->pagu_barang, 0, ',', '.') : '-' }}</td>
+                            <td class="border border-gray-300 py-2 px-2">{{ $b->realisasi_barang ? number_format($b->realisasi_barang, 0, ',', '.') : '-' }}</td>
+                            <td class="border border-gray-300 py-2 px-2">{{ $barang_per ?: '-' }}</td>
+
+                            {{-- Belanja Modal --}}
+                            <td class="border border-gray-300 py-2 px-2">{{ $b->pagu_modal ? number_format($b->pagu_modal, 0, ',', '.') : '-' }}</td>
+                            <td class="border border-gray-300 py-2 px-2">{{ $b->realisasi_modal ? number_format($b->realisasi_modal, 0, ',', '.') : '-' }}</td>
+                            <td class="border border-gray-300 py-2 px-2">{{ $modal_per ?: '-' }}</td>
+
+                            {{-- Total Belanja --}}
+                            <td class="border border-gray-300 py-2 px-2 font-bold">{{ number_format($tp, 0, ',', '.') }}</td>
+                            <td class="border border-gray-300 py-2 px-2 font-bold">{{ number_format($tr, 0, ',', '.') }}</td>
+                            <td class="border border-gray-300 py-2 px-2 font-bold">{{ $total_per }}%</td>
+                        </tr>
+                    @endforeach
+
+                    {{-- Baris TOTAL --}}
+                    @php
+                        $tp_total = $total_primitif['pagu_pegawai'] + $total_primitif['pagu_barang'] + $total_primitif['pagu_modal'];
+                        $tr_total = $total_primitif['realisasi_pegawai'] + $total_primitif['realisasi_barang'] + $total_primitif['realisasi_modal'];
+                        $total_persen = $tp_total > 0 ? round(($tr_total / $tp_total) * 100, 2) : 0;
+                    @endphp
+                    <tr class="bg-biru-tua text-white font-bold text-center">
+                        <td class="border border-white py-2 px-2">TOTAL</td>
+                        <td class="border border-white py-2 px-2">{{ number_format($total_primitif['pagu_pegawai'], 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ number_format($total_primitif['realisasi_pegawai'], 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ round(($total_primitif['pagu_pegawai'] > 0 ? $total_primitif['realisasi_pegawai'] / $total_primitif['pagu_pegawai'] * 100 : 0), 2) }}%</td>
+
+                        <td class="border border-white py-2 px-2">{{ number_format($total_primitif['pagu_barang'], 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ number_format($total_primitif['realisasi_barang'], 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ round(($total_primitif['pagu_barang'] > 0 ? $total_primitif['realisasi_barang'] / $total_primitif['pagu_barang'] * 100 : 0), 2) }}%</td>
+
+                        <td class="border border-white py-2 px-2">{{ number_format($total_primitif['pagu_modal'], 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ number_format($total_primitif['realisasi_modal'], 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ round(($total_primitif['pagu_modal'] > 0 ? $total_primitif['realisasi_modal'] / $total_primitif['pagu_modal'] * 100 : 0), 2) }}%</td>
+
+                        <td class="border border-white py-2 px-2">{{ number_format($tp_total, 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ number_format($tr_total, 0, ',', '.') }}</td>
+                        <td class="border border-white py-2 px-2">{{ $total_persen }}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
