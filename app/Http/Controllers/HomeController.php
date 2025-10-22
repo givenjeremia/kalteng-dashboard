@@ -472,7 +472,7 @@ $total_primitif = [
 
         $html = view('pages.home.components.data', [
             'budgets'         => $budgets,
-            'budgets_primitif' =>$budgets_primitif,
+            'budgets_primitif' => $budgets_merged,
             'total_primitif' =>$total_primitif,
 
             'totalPagu'       => $totalPagu,
