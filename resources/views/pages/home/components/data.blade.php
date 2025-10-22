@@ -165,53 +165,85 @@
 
 
 {{-- Table --}}
-{{-- <div class="card card-flush my-3">
+<div class="card card-flush my-3">
     <div class="card-body">
         <h3>Histori Data Hingga Bulan {{ $bulan }} Pada Tahun {{ $tahun }}</h3>
+
         <table class="table table-hover table-rounded table-striped border gy-7 gs-7" id="budget-table">
             <thead>
                 <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                    <th>Departement</th>
-                    <th>Bulan / Tahun</th>
+                    <th>Departemen</th>
                     <th>Pagu Pegawai</th>
                     <th>Realisasi Pegawai</th>
+                    <th>%</th>
                     <th>Pagu Barang</th>
                     <th>Realisasi Barang</th>
+                    <th>%</th>
                     <th>Pagu Modal</th>
                     <th>Realisasi Modal</th>
+                    <th>%</th>
                     <th>Total Pagu</th>
                     <th>Total Realisasi</th>
                     <th>%</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($budgets as $b)
+                @foreach($budgets_primitif as $b)
                     @php
+                        $pegawai_per = $b->pagu_pegawai > 0 ? round(($b->realisasi_pegawai / $b->pagu_pegawai) * 100, 2) : 0;
+                        $barang_per = $b->pagu_barang > 0 ? round(($b->realisasi_barang / $b->pagu_barang) * 100, 2) : 0;
+                        $modal_per = $b->pagu_modal > 0 ? round(($b->realisasi_modal / $b->pagu_modal) * 100, 2) : 0;
                         $tp = $b->pagu_pegawai + $b->pagu_barang + $b->pagu_modal;
                         $tr = $b->realisasi_pegawai + $b->realisasi_barang + $b->realisasi_modal;
-                        $per = $tp > 0 ? round(($tr/$tp)*100,2) : 0;
-                        if ($b->bulan == 8){
-
-                            // dd($b->bulan);
-                        }
+                        $total_per = $tp > 0 ? round(($tr / $tp) * 100, 2) : 0;
                     @endphp
                     <tr>
                         <td>{{ $b->departement?->title ?? '-' }}</td>
-                        <td>{{ $b->bulan }} / {{ $b->tahun }}</td>
                         <td>{{ number_format($b->pagu_pegawai) }}</td>
                         <td>{{ number_format($b->realisasi_pegawai) }}</td>
+                        <td>{{ $pegawai_per }}%</td>
+
                         <td>{{ number_format($b->pagu_barang) }}</td>
                         <td>{{ number_format($b->realisasi_barang) }}</td>
+                        <td>{{ $barang_per }}%</td>
+
                         <td>{{ number_format($b->pagu_modal) }}</td>
                         <td>{{ number_format($b->realisasi_modal) }}</td>
+                        <td>{{ $modal_per }}%</td>
+
                         <td>{{ number_format($tp) }}</td>
                         <td>{{ number_format($tr) }}</td>
-                        <td>{{ $per }}%</td>
+                        <td>{{ $total_per }}%</td>
                     </tr>
                 @endforeach
+
+                {{-- Baris TOTAL --}}
+                @php
+                    $tp_total = $total_primitif['pagu_pegawai'] + $total_primitif['pagu_barang'] + $total_primitif['pagu_modal'];
+                    $tr_total = $total_primitif['realisasi_pegawai'] + $total_primitif['realisasi_barang'] + $total_primitif['realisasi_modal'];
+                    $total_persen = $tp_total > 0 ? round(($tr_total / $tp_total) * 100, 2) : 0;
+                    // $total = total_primitif;
+                @endphp
+                <tr class="fw-bold text-dark border-top-2 border-gray-300">
+                    <td>TOTAL</td>
+                    <td>{{ number_format($total_primitif['pagu_pegawai']) }}</td>
+                    <td>{{ number_format($total_primitif['realisasi_pegawai']) }}</td>
+                    <td>{{ round(($total_primitif['pagu_pegawai'] > 0 ? $total_primitif['realisasi_pegawai'] / $total_primitif['pagu_pegawai'] * 100 : 0), 2) }}%</td>
+
+                    <td>{{ number_format($total_primitif['pagu_barang']) }}</td>
+                    <td>{{ number_format($total_primitif['realisasi_barang']) }}</td>
+                    <td>{{ round(($total_primitif['pagu_barang'] > 0 ? $total_primitif['realisasi_barang'] / $total_primitif['pagu_barang'] * 100 : 0), 2) }}%</td>
+
+                    <td>{{ number_format($total_primitif['pagu_modal']) }}</td>
+                    <td>{{ number_format($total_primitif['realisasi_modal']) }}</td>
+                    <td>{{ round(($total_primitif['pagu_modal'] > 0 ? $total_primitif['realisasi_modal'] /$total_primitif['pagu_modal'] * 100 : 0), 2) }}%</td>
+
+                    <td>{{ number_format($tp_total) }}</td>
+                    <td>{{ number_format($tr_total) }}</td>
+                    <td>{{ $total_persen }}%</td>
+                </tr>
             </tbody>
         </table>
-        
     </div>
-</div> --}}
+</div>
 

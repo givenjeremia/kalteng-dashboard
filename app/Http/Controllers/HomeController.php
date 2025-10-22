@@ -404,8 +404,83 @@ public function dataDashboard(Request $request)
         }
         // dd($triwulanData);
 
+   // ============================
+        // AGREGASI UNTUK TABEL REKAP
+        // ============================
+        // 1) Ambil realisasi agregat per departemen dari budgets (SUM realisasi_*)
+        $budgets_primitif = Budget::selectRaw('
+                departement_id,
+                SUM(realisasi_pegawai) AS realisasi_pegawai,
+                SUM(realisasi_barang) AS realisasi_barang,
+                SUM(realisasi_modal) AS realisasi_modal
+            ')
+            ->where('tahun', $tahun)
+            ->where('bulan', '<=', $bulan)
+            ->groupBy('departement_id')
+            ->with('departement')
+            ->get();
+
+        // 2) Ambil pagu per departemen dari ceilings (pivot by type_data)
+        $ceilings_per_dept = Ceiling::selectRaw('
+                departement_id,
+                SUM(CASE WHEN type_data = "pegawai" THEN nominal ELSE 0 END) AS pagu_pegawai,
+                SUM(CASE WHEN type_data = "barang" THEN nominal ELSE 0 END) AS pagu_barang,
+                SUM(CASE WHEN type_data = "modal" THEN nominal ELSE 0 END) AS pagu_modal
+            ')
+            ->where('tahun', $tahun)
+            ->groupBy('departement_id')
+            ->get();
+
+        // 3) Merge menjadi koleksi yang mudah dipakai di view
+        $budgets_merged = $budgets_primitif->map(function ($b) use ($ceilings_per_dept) {
+            $c = $ceilings_per_dept->firstWhere('departement_id', $b->departement_id);
+
+            return (object) [
+                'departement' => $b->departement,
+                'departement_id' => $b->departement_id,
+                'pagu_pegawai' => $c->pagu_pegawai ?? 0,
+                'pagu_barang' => $c->pagu_barang ?? 0,
+                'pagu_modal' => $c->pagu_modal ?? 0,
+                'realisasi_pegawai' => $b->realisasi_pegawai ?? 0,
+                'realisasi_barang' => $b->realisasi_barang ?? 0,
+                'realisasi_modal' => $b->realisasi_modal ?? 0,
+            ];
+        });
+
+        // Pastikan juga menyertakan departemen yang punya pagu tetapi belum punya realisasi (join-like)
+        // tambahkan departemen dari ceilings yang tidak ada di budgets_primitif
+        $ceilings_per_dept->each(function ($c) use (&$budgets_merged) {
+            $exists = $budgets_merged->firstWhere('departement_id', $c->departement_id);
+            if (!$exists) {
+                // create placeholder object (departement relation mungkin perlu di-load)
+                $departement = \App\Models\Departement::find($c->departement_id);
+                $budgets_merged->push((object) [
+                    'departement' => $departement,
+                    'departement_id' => $c->departement_id,
+                    'pagu_pegawai' => $c->pagu_pegawai ?? 0,
+                    'pagu_barang' => $c->pagu_barang ?? 0,
+                    'pagu_modal' => $c->pagu_modal ?? 0,
+                    'realisasi_pegawai' => 0,
+                    'realisasi_barang' => 0,
+                    'realisasi_modal' => 0,
+                ]);
+            }
+        });
+
+        // Hitung total primitif dari merged data
+        $total_primitif = [
+            'pagu_pegawai' => $budgets_merged->sum('pagu_pegawai'),
+            'pagu_barang' => $budgets_merged->sum('pagu_barang'),
+            'pagu_modal' => $budgets_merged->sum('pagu_modal'),
+            'realisasi_pegawai' => $budgets_merged->sum('realisasi_pegawai'),
+            'realisasi_barang' => $budgets_merged->sum('realisasi_barang'),
+            'realisasi_modal' => $budgets_merged->sum('realisasi_modal'),
+        ];
         $html = view('pages.home.components.data', [
             'budgets'         => $budgets,
+            'budgets_primitif' =>$budgets_primitif,
+            'total_primitif' =>$total_primitif,
+
             'totalPagu'       => $totalPagu,
             'totalRealisasi'  => $totalRealisasi,
             'persentase'      => $persentase,
