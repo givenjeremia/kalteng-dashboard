@@ -171,7 +171,7 @@
 </table>
 
 {{-- ================= IKPA ================= --}}
-<div class="page-break"></div>
+{{-- <div class="page-break"></div> --}}
 <div class="section-title">INDIKATOR KINERJA PELAKSANAAN ANGGARAN (IKPA)</div>
 <table style="width:100%; border-collapse:collapse; font-size:11px; margin-bottom:20px;">
     <thead>
