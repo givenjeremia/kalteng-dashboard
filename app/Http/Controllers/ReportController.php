@@ -154,7 +154,7 @@ class ReportController extends Controller
                 ->get();
         return [
             'title' => "Dashboard Capaian Kinerja & Anggaran",
-            'subtitle' => "Bulan $bulan Tahun $tahun",
+            'subtitle' => "Per Bulan $bulan Tahun $tahun",
             'instansi' => "Kantor Wilayah Kementerian Hukum Kalimantan Tengah",
             'tanggal' => now()->format('d F Y'),
             'logo' => public_path('logo.png'),
