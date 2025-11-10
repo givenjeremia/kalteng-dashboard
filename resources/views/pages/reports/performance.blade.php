@@ -227,7 +227,7 @@
     </tbody>
 </table>
 
-<div class="page-break"></div>
+{{-- <div class="page-break"></div> --}}
 
 {{-- ================= HISTORI PER SATKER ================= --}}
 <div class="section-title">HISTORI REALISASI PER SATKER – {{ $subtitle }}</div>
