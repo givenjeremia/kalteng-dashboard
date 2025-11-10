@@ -81,6 +81,12 @@
                         </select>
                         
                     </div>
+                    <div class="col">
+                        <label for="exampleFormControlInput1" class="form-label"></label>
+                        <br>
+                        <a href="{{ route('reports.pdf') }}" class="btn btn-primary">Download PDF</a>
+                        
+                    </div>
                 </div>
 
 

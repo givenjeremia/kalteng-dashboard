@@ -12,7 +12,7 @@ use App\Http\Controllers\CeilingController;
 use App\Http\Controllers\EMonevController;
 use App\Http\Controllers\IKPAScoreController;
 use App\Http\Controllers\EPerformanceController;
-
+use App\Http\Controllers\ReportController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -40,10 +40,23 @@ Route::middleware(['auth'])->group(function(){
 
     });
 
+    Route::prefix('budgets')->group(function () {
+        
+        Route::resource('expenses', BudgetController::class);
+        Route::resource('ceilings', CeilingController::class);
+        Route::resource('e-monev', EmonevController::class);
+        Route::resource('ikpa-score', IKPAScoreController::class);
+        Route::resource('e-performance', EPerformanceController::class);
+
+
+
+
+    });
+
+
+    Route::prefix('reports')->group(function () {
+        Route::get('preview', [ReportController::class, 'preview'])->name('reports.preview');
+        Route::get('pdf', [ReportController::class, 'download'])->name('reports.pdf');
+    });
     
-
-
-
-
-
 });

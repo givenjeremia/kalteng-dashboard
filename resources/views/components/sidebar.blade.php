@@ -74,70 +74,70 @@
                     </a>
                 </div>
 
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->is('*budgets*') ? 'show' : '' }}">
-                    <span
-                        class="menu-link  {{ request()->is('*budgets*') ? 'active' : '' }}">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-dollar fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title fw-bolder fs-5">Budgets</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('ceilings.index') ? 'active' : '' }}"
-                                href="{{ route('ceilings.index') }}">
-                                <span class="menu-title fw-bolder fs-5">
-                                    Ceiling
-                                </span>
-                            </a>
-                        </div>
-
-                        <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('expenses.index') ? 'active' : '' }}"
-                                href="{{ route('expenses.index') }}">
-                                <span class="menu-title fw-bolder fs-5">
-                                    Expense
-                                </span>
-                            </a>
-                        </div>
-
-                        <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('e-monev.index') ? 'active' : '' }}"
-                                href="{{ route('e-monev.index') }}">
-                                <span class="menu-title fw-bolder fs-5">
-                                    E-Monev
-                                </span>
-                            </a>
-                        </div>
-
-                        <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('e-performance.index') ? 'active' : '' }}"
-                                href="{{ route('e-performance.index') }}">
-                                <span class="menu-title fw-bolder fs-5">
-                                    E-Performance
-                                </span>
-                            </a>
-                        </div>
-
-                        <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('ikpa-score.index') ? 'active' : '' }}"
-                                href="{{ route('ikpa-score.index') }}">
-                                <span class="menu-title fw-bolder fs-5">
-                                    IKPA Score
-                                </span>
-                            </a>
-                        </div>
-
-
-                    </div>
-                </div>
-
+                
                 @if(auth()->user()->hasRole('Super Admin'))
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->is('*budgets*') ? 'show' : '' }}">
+                        <span
+                            class="menu-link  {{ request()->is('*budgets*') ? 'active' : '' }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-dollar fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title fw-bolder fs-5">Budgets</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <a class="menu-link {{ request()->routeIs('ceilings.index') ? 'active' : '' }}"
+                                    href="{{ route('ceilings.index') }}">
+                                    <span class="menu-title fw-bolder fs-5">
+                                        Ceiling
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ request()->routeIs('expenses.index') ? 'active' : '' }}"
+                                    href="{{ route('expenses.index') }}">
+                                    <span class="menu-title fw-bolder fs-5">
+                                        Expense
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ request()->routeIs('e-monev.index') ? 'active' : '' }}"
+                                    href="{{ route('e-monev.index') }}">
+                                    <span class="menu-title fw-bolder fs-5">
+                                        E-Monev
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ request()->routeIs('e-performance.index') ? 'active' : '' }}"
+                                    href="{{ route('e-performance.index') }}">
+                                    <span class="menu-title fw-bolder fs-5">
+                                        E-Performance
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ request()->routeIs('ikpa-score.index') ? 'active' : '' }}"
+                                    href="{{ route('ikpa-score.index') }}">
+                                    <span class="menu-title fw-bolder fs-5">
+                                        IKPA Score
+                                    </span>
+                                </a>
+                            </div>
+
+
+                        </div>
+                    </div>
                     <div class="menu-item">
                         <a class="menu-link {{ request()->routeIs('file-categories.index') ? 'active' : '' }}"
                             href="{{ route('file-categories.index') }}">

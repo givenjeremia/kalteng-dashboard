@@ -36,7 +36,7 @@ class EPerformanceController extends Controller
                     return '<span class="text-gray-800 fs-5 fw-bold mb-1">' . $item->sasaran . '</span>';
                 })
                 ->addColumn('Indikator', function ($item) {
-                    return '<span class="text-gray-800 fs-5 fw-bold mb-1">' . $item->sasaran . '</span>';
+                    return '<span class="text-gray-800 fs-5 fw-bold mb-1">' . $item->indikator . '</span>';
                 })
                 ->addColumn('Target', function ($item) {
                     return '<span class="text-gray-800 fs-5 fw-bold mb-1">' . number_format($item->target, 2, ',', '.') . '</span>';
